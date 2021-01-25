@@ -1,0 +1,57 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title>Your events</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+
+        <ion-icon name="fast-food-outline"></ion-icon>
+        &nbsp;&nbsp;&nbsp;
+        <ion-label>
+            <h2>ร้านลุงตัน</h2>
+            <p>10/12/2020 12:30</p>
+            <p>หาเพื่อนกินข้าว ใครว่างมาเลยครับ</p>
+        </ion-label>
+
+        <div>
+            <ion-badge id="notifications-badge" color="danger">1</ion-badge>
+        </div>
+
+    </ion-item>
+
+    <ion-item>
+        <ion-avatar>
+            <ion-img src="assets/images/thor.jpg"></ion-img>
+        </ion-avatar>
+        &nbsp;&nbsp;&nbsp;
+        <ion-label>
+            <h2>THOR</h2>
+            <p>wants to join your activity.</p>
+            <ion-button color="success">ยอมรับ</ion-button>
+            <ion-button color="danger">ปฏิเสธ</ion-button>
+        </ion-label>
+    </ion-item>
+
+
+    <ion-tabs>
+        <ion-tab-bar slot="bottom">
+            <ion-tab-button href="notifications">
+                <ion-icon name="albums"></ion-icon>
+                All
+            </ion-tab-button>
+
+            <ion-tab-button>
+                <ion-icon name="enter" color="primary"></ion-icon>
+                Your events
+            </ion-tab-button>
+
+            <ion-tab-button href="notirequest">
+                <ion-icon name="notifications"></ion-icon>
+                Your requests
+            </ion-tab-button>
+
+        </ion-tab-bar>
+    </ion-tabs>
+</ion-content>

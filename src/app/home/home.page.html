@@ -1,0 +1,283 @@
+<ion-app>
+    <ion-menu side="start" content-id="main-content">
+        <ion-header>
+            <ion-toolbar translucent color="dark">
+                <ion-title color="light">Menu</ion-title>
+            </ion-toolbar>
+        </ion-header>
+        <ion-content>
+            <ion-list>
+                <ion-item href="appointments">
+                    <ion-icon name="calendar" slot="start"></ion-icon>
+                    <ion-label>Appointments</ion-label>
+                </ion-item>
+                <ion-item href="notifications">
+                    <ion-icon name="notifications" slot="start"></ion-icon>
+                    <ion-label>Notifications</ion-label>
+                    <ion-badge id="notifications-badge" color="danger">4</ion-badge>
+                </ion-item>
+                <ion-item href="history">
+                    <ion-icon name="time" slot="start"></ion-icon>
+                    <ion-label>History</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-icon name="log-out" slot="start"></ion-icon>
+                    <ion-label>Logout</ion-label>
+                </ion-item>
+
+            </ion-list>
+        </ion-content>
+    </ion-menu>
+
+    <div class="ion-page" id="main-content">
+        <ion-header>
+            <ion-toolbar>
+                <ion-row>
+                    <ion-col class="ion-align-self-center">
+                        <ion-buttons>
+                            <ion-menu-button></ion-menu-button>
+                        </ion-buttons>
+                    </ion-col>
+                    <ion-col></ion-col>
+                    <ion-col></ion-col>
+                    <ion-col></ion-col>
+                    <ion-col class="ion-align-self-center">
+                        <ion-button href="notifications" color="dark" fill="clear" size="large">
+                            <ion-icon expand="block" name="notifications"></ion-icon>
+                            <ion-badge id="notifications-badge" color="danger"></ion-badge>
+                        </ion-button>
+                    </ion-col>
+
+                    <ion-col>
+                        <ion-item href="profile">
+                            <ion-avatar>
+                                <ion-img src="assets/images/ART.jpg"></ion-img>
+                            </ion-avatar>
+                        </ion-item>
+
+                    </ion-col>
+                </ion-row>
+
+                <ion-item>
+                    <ion-label>หมวดหมู่</ion-label>
+                    <ion-select placeholder="เลือก" multiple="true" color="success">
+                        <ion-select-option value="all">ทั้งหมด</ion-select-option>
+                        <ion-select-option value="food">อาหาร</ion-select-option>
+                        <ion-select-option value="sports">กีฬา</ion-select-option>
+                        <ion-select-option value="media">บันเทิง</ion-select-option>
+                        <ion-select-option value="edu">การศึกษา</ion-select-option>
+                        <ion-select-option value="valun">กิจกรรมอาสา</ion-select-option>
+                        <ion-select-option value="other">อื่นๆ</ion-select-option>
+                    </ion-select>
+                </ion-item>
+
+                <ion-item>
+                    <ion-label>เวลา</ion-label>
+                    <ion-datetime [(ngModel)]="datetimecate" displayFormat="HH:00 น."></ion-datetime>
+                </ion-item>
+
+                &nbsp;
+
+                <ion-button fill="solid" expand="block" color="primary">
+                    <ion-icon name="search"></ion-icon>
+                    &nbsp; search
+                </ion-button>
+
+            </ion-toolbar>
+        </ion-header>
+
+
+        <ion-content color="dark">
+            <ion-card>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <ion-avatar slot="start">
+                                <ion-img src="assets/images/thanos.jfif"></ion-img>
+                            </ion-avatar>
+                            <ion-label>
+                                <h2>
+                                    <ion-router-link color="warning" href="profileuser">Thanos</ion-router-link>
+                                </h2>
+                                <p>10/12/2020 19:00</p>
+                                <p>จำนวน : 4 คน</p>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col></ion-col>
+                    <ion-col></ion-col>
+                    <ion-row>
+                        <ion-col>
+                            <ion-button color="warning" size="small">
+                                <ion-icon name="pencil-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button color="warning" size="small" (click)="deletePost()">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </ion-button>
+
+                        </ion-col>
+                    </ion-row>
+
+
+                </ion-row>
+                <ion-card-content>
+                    <ion-label color="dark">หาเพื่อนกินข้าวครับ</ion-label>
+                </ion-card-content>
+
+
+                <ion-footer>
+
+                    <ion-row>
+                        <ion-col>
+                            <ion-button fill="outline" color="dark">
+                                <ion-icon name="fast-food-outline"></ion-icon>
+                                &nbsp;
+                                <ion-label>อาหาร</ion-label>
+                            </ion-button>
+
+                            <ion-button fill="outline" color="dark">
+                                <ion-label>ร้านครัวสมใจ</ion-label>
+                            </ion-button>
+
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col>
+                            <ion-button fill="outline" color="dark">
+                                <ion-col class="ion-text-center">
+                                    <ion-label>
+                                        10/12/2020 19:00
+                                    </ion-label>
+                                </ion-col>
+                            </ion-button>
+                        </ion-col>
+
+                        <ion-col class="ion-text-center">
+                            <ion-button expand="block" color="primary" (click)="showPrompt()">
+                                <ion-icon name="location-outline"></ion-icon>
+                            </ion-button>
+                        </ion-col>
+
+                        <ion-col class="ion-text-center">
+                            <ion-button color="primary" expand="block" (click)="showPrompt2()">
+                                <div>สนใจ</div>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                </ion-footer>
+            </ion-card>
+
+
+
+
+            <ion-card>
+                <ion-row>
+                    <ion-col>
+                        <ion-item>
+                            <ion-avatar slot="start">
+                                <ion-img src="assets/images/iron.jpg"></ion-img>
+                            </ion-avatar>
+                            <ion-label>
+                                <h2>
+                                    <p>Ironman</p>
+                                </h2>
+                                <p>10/1/2021 19:00</p>
+                                <p>จำนวน : 3 คน</p>
+                            </ion-label>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col></ion-col>
+                    <ion-col></ion-col>
+                    <ion-row>
+                        <ion-col>
+                            <ion-button color="warning" size="small">
+                                <ion-icon name="pencil-outline"></ion-icon>
+                            </ion-button>
+                            <ion-button color="warning" size="small" (click)="deletePost()">
+                                <ion-icon name="trash-outline"></ion-icon>
+                            </ion-button>
+
+                        </ion-col>
+                    </ion-row>
+
+
+                </ion-row>
+                <ion-card-content>
+                    <ion-label color="dark">หาเพื่อนติวแคลคูลัสครับ</ion-label>
+                </ion-card-content>
+
+
+                <ion-footer>
+
+                    <ion-row>
+                        <ion-col>
+                            <ion-button fill="outline" color="dark">
+                                <ion-icon name="library-outline"></ion-icon>
+                                &nbsp;
+                                <ion-label>การศึกษา</ion-label>
+                            </ion-button>
+
+                            <ion-button fill="outline" color="dark">
+                                <ion-label>ห้อง SC248</ion-label>
+                            </ion-button>
+
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col>
+                            <ion-button fill="outline" color="dark">
+                                <ion-col class="ion-text-center">
+                                    <ion-label>
+                                        10/12/2020 19:00
+                                    </ion-label>
+                                </ion-col>
+                            </ion-button>
+                        </ion-col>
+
+                        <ion-col class="ion-text-center">
+                            <ion-button expand="block" color="primary" (click)="showPrompt()">
+                                <ion-icon name="location-outline"></ion-icon>
+                            </ion-button>
+                        </ion-col>
+
+                        <ion-col class="ion-text-center">
+                            <ion-button color="primary" expand="block" (click)="showPrompt2()">
+                                <div>สนใจ</div>
+                            </ion-button>
+                        </ion-col>
+                    </ion-row>
+                </ion-footer>
+            </ion-card>
+
+
+
+
+            <!-- <ion-fab vertical="bottom" horizontal="center" edge slot="fixed">
+                <ion-fab-button ion-fab color="success" >
+                    <ion-icon name="add"></ion-icon>
+                </ion-fab-button>
+            </ion-fab>
+
+            <ion-fab vertical="bottom" horizontal="end" edge slot="fixed">
+                <ion-fab-button ion-fab color="success">
+                    <ion-icon name="chatbubbles-outline"></ion-icon>
+                </ion-fab-button>
+            </ion-fab> -->
+            <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+                <ion-fab-button color="dark">
+                    <ion-icon md="caret-back" ios="chevron-up-circle-outline"></ion-icon>
+                </ion-fab-button>
+                <ion-fab-list side="start">
+                    <ion-fab-button color="light">
+                        <ion-icon name="chatbubbles"></ion-icon>
+                    </ion-fab-button>
+                    <ion-fab-button color="light" href="post">
+                        <ion-icon name="add"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab-list>
+            </ion-fab>
+        </ion-content>
+    </div>
+</ion-app>

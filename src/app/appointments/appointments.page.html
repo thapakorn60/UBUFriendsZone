@@ -1,0 +1,39 @@
+<ion-header>
+    <ion-toolbar>
+        <ion-title color="light">Appointments</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-item>
+
+        <ion-icon name="fast-food-outline"></ion-icon>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <ion-label>
+            <h2>Thanos</h2>
+            <h2>ร้านลุงตัน</h2>
+            <p>10/12/2020 12:30 เข้าร่วม 2 คน</p>
+            <p>หาเพื่อนกินข้าว ใครว่างมาเลยครับ</p>
+
+            <ion-col class="ion-text-center">
+                <ion-button color="primary" (click)="location()">
+                    <ion-icon name="location-outline"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <ion-button color="success">
+                    <ion-icon name="chatbubbles-outline"></ion-icon>
+                </ion-button>
+            </ion-col>
+            <ion-col class="ion-text-center">
+                <ion-button color="danger" (click)="cancel()">
+                    <div>ยกเลิก</div>
+                </ion-button>
+            </ion-col>
+        </ion-label>
+
+
+
+
+    </ion-item>
+</ion-content>

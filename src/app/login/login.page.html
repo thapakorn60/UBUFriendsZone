@@ -1,0 +1,31 @@
+<ion-toolbar>
+    <!--<ion-header>
+    <ion-title></ion-title>
+</ion-header>-->
+</ion-toolbar>
+
+<ion-content>
+    <form (ngSubmit)="login()">
+        <div class="ion-text-center">
+            <h1>Login</h1>
+        </div>
+
+        <ion-item>
+            <ion-label position="fixed">Email</ion-label>
+            <ion-icon name="person"></ion-icon>
+            &nbsp;
+            <ion-input #usernameInput type="text" [(ngModel)]="logIn.email" name="email" color="dark"></ion-input>
+        </ion-item>
+        <ion-item lines="full">
+            <ion-label position="fixed">Password</ion-label>
+            <ion-icon name="lock-closed"></ion-icon>
+            &nbsp;
+            <ion-input #passwordInput type="password" [(ngModel)]="logIn.password" name="password" color="dark"></ion-input>
+        </ion-item>
+        &nbsp; &nbsp; &nbsp;
+
+        <ion-button size="large" expand="block" color="primary" (click)="login()" href="home">Login</ion-button>
+        &nbsp; &nbsp;
+        <ion-button size="large" expand="block" color="success" href="register">Register</ion-button>
+    </form>
+</ion-content>
