@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
-  {
-    path: 'home',
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./home/home.module').then(m => m.HomePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -21,10 +24,16 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./profile/profile.module').then( m => m.ProfilePageModule)
+    loadChildren: () =>
+      import('./profile/profile.module').then(m => m.ProfilePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'post',
+    loadChildren: () => import('./post/post.module').then( m => m.PostPageModule)
+  },
+  {
+    path: 'editpost/:id',
     loadChildren: () => import('./post/post.module').then( m => m.PostPageModule)
   },
   {
@@ -50,6 +59,38 @@ const routes: Routes = [
   {
     path: 'notirequest',
     loadChildren: () => import('./notirequest/notirequest.module').then( m => m.NotirequestPageModule)
+  },
+  {
+    path: 'map',
+    loadChildren: () => import('./map/map.module').then( m => m.MapPageModule)
+  },
+  {
+    path: 'signup',
+    loadChildren: () => import('./pages/signup/signup.module').then( m => m.SignupPageModule)
+  },
+  {
+    path: 'noti-events',
+    loadChildren: () => import('./noti-events/noti-events.module').then( m => m.NotiEventsPageModule)
+  },
+  {
+    path: 'users',
+    loadChildren: () => import('./pages/users/users.module').then( m => m.UsersPageModule)
+  },
+  {
+    path: 'test',
+    loadChildren: () => import('./test/test.module').then( m => m.TestPageModule)
+  },
+  {
+    path: 'my-event',
+    loadChildren: () => import('./event/my-event/my-event.module').then( m => m.MyEventPageModule)
+  },
+  {
+    path: 'joiner-event',
+    loadChildren: () => import('./event/joiner-event/joiner-event.module').then( m => m.JoinerEventPageModule)
+  },
+  {
+    path: 'comments',
+    loadChildren: () => import('./comments/comments.module').then( m => m.CommentsPageModule)
   },
 ];
 

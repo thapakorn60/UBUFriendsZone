@@ -5,3 +5,13 @@ ion-toolbar {
 ion-title {
     color: aliceblue;
 }
+
+.mat-form-field+.mat-form-field {
+    margin-left: 8px;
+}
+
+// page-home {
+//     button {
+//         align-items: baseline;
+//     }
+// }

@@ -1,105 +1,143 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title color="light">My Profile</ion-title>
+    <ion-toolbar color="dark">
+        <ion-row>
+            <ion-col>
+                <ion-buttons>
+                    <ion-back-button defaultHref="/home"></ion-back-button>
+                </ion-buttons>
+            </ion-col>
+            <ion-col>
+                <ion-title color="warning">
+                    <h1>My Profile</h1>
+                </ion-title>
+            </ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+            <ion-col></ion-col>
+        </ion-row>
     </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-    <ion-item-sliding>
-        <ion-item>
-            <ion-avatar>
-                <ion-img src="assets/images/ART.jpg"></ion-img>
-            </ion-avatar>
-            &nbsp;&nbsp;&nbsp;
-            <ion-label>
-                <h1>ART</h1>
-                <h2>อายุ: 22</h2>
-                <h2>เพศ: ชาย</h2>
-            </ion-label>
-        </ion-item>
-        <ion-item-options side="end">
-            <ion-item-option color="danger">
-                <ion-icon slot="icon-only" name="pencil"></ion-icon>
-            </ion-item-option>
-        </ion-item-options>
-    </ion-item-sliding>
+
+    <ion-item>
+        <ion-avatar class="image-center">
+            <!-- <ion-icon size="large" name="person-circle"></ion-icon> -->
+
+            <ion-img src="assets/images/ART.jpg"></ion-img>
+        </ion-avatar>
+    </ion-item>
 
     <ion-list>
-        <ion-item-sliding>
-            <ion-item>
-                <ion-icon name="mail-outline" size="small"></ion-icon>
-                &nbsp;&nbsp;
-                <ion-label>อีเมลล์: thapakorn.ju.60@ubu.ac.th</ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option>edit</ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
+        <ion-item>
+            <ion-icon name="person-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">ชื่อ : {{data_user_login.name}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
 
-        <ion-item-sliding>
-            <ion-item>
-                <ion-icon name="school-outline" size="small"></ion-icon>
-                &nbsp;&nbsp;
-                <ion-label>การศึกษา: กำลังศึกษา</ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option>edit</ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
+        <ion-item>
+            <ion-icon name="body-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">อายุ : {{data_user_login.age}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
 
-        <ion-item-sliding>
-            <ion-item>
-                <ion-icon name="library-outline" size="small"></ion-icon>
-                &nbsp;&nbsp;
-                <ion-label>คณะ: วิทยาศาสตร์</ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option>edit</ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
+        <ion-item>
+            <ion-icon name="people-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">เพศ : {{data_user_login.sex}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
 
-        <ion-item-sliding>
-            <ion-item>
-                <ion-icon name="layers-outline" size="small"></ion-icon>
-                &nbsp;&nbsp;
-                <ion-label>ชั้นปี: 4</ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option>edit</ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
+        <ion-item>
+            <ion-icon name="people-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">ไลฟ์สไตล์ : {{data_user_login.lifestyle}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
 
-        <ion-item-sliding>
-            <ion-item>
-                <ion-icon name="logo-facebook" size="small"></ion-icon>
-                &nbsp;&nbsp;
-                <ion-label>Facebook: Thapakorn Junsong</ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option>edit</ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
 
-        <ion-item-sliding>
-            <ion-item>
-                <ion-icon name="logo-instagram" size="small"></ion-icon>
-                &nbsp;&nbsp;
-                <ion-label>Instagram: the.sound_of_silence</ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option>edit</ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
+        <ion-item>
+            <ion-icon name="mail-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">อีเมลล์ : {{data_user_login.email}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
 
-        <ion-item-sliding>
-            <ion-item>
-                <ion-label>อื่นๆ: </ion-label>
-            </ion-item>
-            <ion-item-options side="end">
-                <ion-item-option>edit</ion-item-option>
-            </ion-item-options>
-        </ion-item-sliding>
+
+
+
+        <ion-item>
+            <ion-icon name="school-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">การศึกษา : {{data_user_login.educational}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
+
+
+
+        <ion-item>
+            <ion-icon name="library-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">คณะ : {{data_user_login.faculty}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon name="layers-outline" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">ชั้นปี : {{data_user_login.year}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon name="logo-facebook" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">Facebook : {{data_user_login.facebook}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
+
+
+        <ion-item>
+            <ion-icon name="logo-instagram" size="small"></ion-icon>
+            &nbsp;&nbsp;
+            <ion-label color="warning">Instagram : {{data_user_login.instagram}}</ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
+
+
+
+        <ion-item>
+            <ion-label color="warning">อื่นๆ : {{data_user_login.other}} </ion-label>
+            <!-- <ion-button color="warning" size="small">
+                <ion-icon color="dark" size="small" name="pencil"></ion-icon>
+            </ion-button> -->
+        </ion-item>
+
 
     </ion-list>
 </ion-content>

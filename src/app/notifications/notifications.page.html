@@ -1,57 +1,16 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title color="light">Notifications</ion-title>
+        <ion-row>
+            <ion-buttons>
+                <ion-back-button color="warning" defaultHref="/home"></ion-back-button>
+            </ion-buttons>
+            <ion-title color="warning">Notifications</ion-title>
+        </ion-row>
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-item>
-
-        <ion-icon name="fast-food-outline"></ion-icon>
-        &nbsp;&nbsp;&nbsp;
-        <ion-label>
-            <p>Your events</p>
-            <h2>ร้านลุงตัน</h2>
-            <p>10/12/2020 12:30</p>
-            <p>หาเพื่อนกินข้าว ใครว่างมาเลยครับ</p>
-        </ion-label>
-
-        <div>
-            <ion-badge id="notifications-badge" color="danger">1</ion-badge>
-        </div>
-
-    </ion-item>
-
-    <ion-item>
-        <ion-avatar>
-            <ion-img src="assets/images/iron.jpg"></ion-img>
-        </ion-avatar>
-        &nbsp;&nbsp;&nbsp;
-        <ion-label>
-            <h2>Ironman</h2>
-            <p>confirmed your request.</p>
-        </ion-label>
-        <div>
-            <p>14:00 น.</p>
-        </div>
-    </ion-item>
-
-    <ion-item>
-        <ion-avatar>
-            <ion-img src="assets/images/thanos.jfif"></ion-img>
-        </ion-avatar>
-        &nbsp;&nbsp;&nbsp;
-        <ion-label>
-            <h2>Thanos</h2>
-            <p>confirmed your request.</p>
-        </ion-label>
-        <div>
-            <p>11:00 น.</p>
-        </div>
-    </ion-item>
-
-
-    <ion-tabs>
+<ion-content color="dark">
+    <!-- <ion-tabs disabled="pageFlow.disableOtherTabs">
         <ion-tab-bar slot="bottom">
             <ion-tab-button>
                 <ion-icon name="albums" color="primary"></ion-icon>
@@ -69,7 +28,97 @@
             </ion-tab-button>
 
         </ion-tab-bar>
-    </ion-tabs>
+    </ion-tabs> -->
+    <ion-card>
+        <ion-item color="warning">
+
+            <ion-icon name="football-outline"></ion-icon>
+            &nbsp;&nbsp;&nbsp;
+            <ion-label>
+                <h1>กำลังจะเริ่ม</h1>
+                <h2>โดย : Akkaradet Puang </h2>
+                <h2>ที่ หนองอิเจมส์</h2>
+                <p>04/03/2021 06:30 ถึง 07:40</p>
+                <p>ออกกำลังกายยามเช้า</p>
+            </ion-label>
+
+            <!-- <div>
+                <ion-badge id="notifications-badge" color="danger">1</ion-badge>
+            </div> -->
+
+        </ion-item>
+
+    </ion-card>
+    <ion-card>
+        <ion-item color="danger">
+
+            <ion-icon name="football-outline"></ion-icon>
+            &nbsp;&nbsp;&nbsp;
+            <ion-label>
+                <h1>ยกเลิกกิจกรรม</h1>
+                <h2>โดย : Akkaradet Puang </h2>
+                <h2>ที่ หนองอิเจมส์</h2>
+                <p>04/03/2021 06:30 ถึง 07:40</p>
+                <p>ออกกำลังกายยามเช้า</p>
+            </ion-label>
+
+            <!-- <div>
+                <ion-badge id="notifications-badge" color="danger">1</ion-badge>
+            </div> -->
+
+        </ion-item>
+    </ion-card>
+    <ion-card>
+        <ion-item>
+
+            <ion-icon name="fast-food-outline"></ion-icon>
+            &nbsp;&nbsp;&nbsp;
+            <ion-label>
+                <p>Your events</p>
+                <h2>ร้านลุงตัน</h2>
+                <p>10/12/2020 12:30 ถึง 13:30</p>
+                <p>หาเพื่อนกินข้าว ใครว่างมาเลยครับ</p>
+            </ion-label>
+
+            <div>
+                <ion-badge id="notifications-badge" color="danger">1</ion-badge>
+            </div>
+
+        </ion-item>
+    </ion-card>
+    <ion-card>
+
+        <ion-item>
+            <ion-avatar>
+                <ion-img src="assets/images/iron.jpg"></ion-img>
+            </ion-avatar>
+            &nbsp;&nbsp;&nbsp;
+            <ion-label>
+                <h2>Ironman</h2>
+                <p>confirmed your request.</p>
+            </ion-label>
+            <div>
+                <p>14:00 น.</p>
+            </div>
+        </ion-item>
+    </ion-card>
+
+    <ion-card>
+
+        <ion-item>
+            <ion-avatar>
+                <ion-img src="assets/images/thanos.jfif"></ion-img>
+            </ion-avatar>
+            &nbsp;&nbsp;&nbsp;
+            <ion-label>
+                <h2>Thanos</h2>
+                <p>confirmed your request.</p>
+            </ion-label>
+            <div>
+                <p>11:00 น.</p>
+            </div>
+        </ion-item>
+    </ion-card>
 
 
 </ion-content>

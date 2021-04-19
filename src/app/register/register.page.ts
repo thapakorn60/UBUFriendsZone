@@ -12,12 +12,12 @@ import { UsersService } from '../api/users.service';
 export class RegisterPage implements OnInit {
 
   person = {
-    img: '',
-    name: '',
-    tel: '',
     email: '',
     password: '',
     cpassword: '',
+    img: '',
+    name: '',
+    tel: '',
     age: '',
     sex: '',
     lifestyle: {},
@@ -32,22 +32,22 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
   register() {
-    this.usersService.addUser(
-      this.person.img,
-      this.person.name,
-      this.person.tel,
-      this.person.email,
-      this.person.password,
-      this.person.age,
-      this.person.sex,
-      this.person.lifestyle,
-      this.person.educational,
-      this.person.faculty,
-      this.person.year,
-      this.person.facebook,
-      this.person.instagram,
-      this.person.other
-    );
+    // this.usersService.addUser(
+      // this.person.img,
+      // this.person.name,
+      // this.person.tel,
+      // this.person.email,
+      // this.person.password,
+      // this.person.age,
+      // this.person.sex,
+      // this.person.lifestyle,
+      // this.person.educational,
+      // this.person.faculty,
+      // this.person.year,
+      // this.person.facebook,
+      // this.person.instagram,
+      // this.person.other
+    // );
   }
 
   logData(){

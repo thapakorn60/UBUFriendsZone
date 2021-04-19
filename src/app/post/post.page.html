@@ -1,6 +1,11 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title color="light">สร้างโพส</ion-title>
+        <ion-row>
+            <ion-buttons>
+                <ion-back-button color="warning" defaultHref="/home"></ion-back-button>
+            </ion-buttons>
+            <ion-title color="warning">สร้างโพส</ion-title>
+        </ion-row>
     </ion-toolbar>
 </ion-header>
 
@@ -11,12 +16,21 @@
 
                 <ion-item>
                     <ion-avatar slot="start">
-                        <ion-img src="assets/images/ART.jpg"></ion-img>
+                        <!-- <ion-img src="assets/images/ART.jpg"></ion-img> -->
+                        <ion-icon size="large" name="person-circle"></ion-icon>
                     </ion-avatar>
                     <ion-label>
-                        <h2>ART</h2>
-
+                        <ion-input type="text" [(ngModel)]="Post.name" name="name" value="{{data_user_login.name}}"></ion-input>
                     </ion-label>
+                    <!-- <ion-input type="date" [(ngModel)]="Post.datePost" name="datePost" value="{{today | date: 'HH:mm dd/MM/yyyy'}}"></ion-input> -->
+                    <!-- <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="Post.datePost"></ion-datetime> -->
+                </ion-item>
+
+                <ion-item>
+                    <ion-label position="floating">Event name(ชื่ออีเว้นท์)</ion-label>
+                    <ion-input [(ngModel)]="Post.eventname" name="eventname"></ion-input>
+
+
                 </ion-item>
 
                 <ion-item>
@@ -30,30 +44,41 @@
                         <ion-select-option value="sport">กีฬา</ion-select-option>
                         <ion-select-option value="media">บันเทิง</ion-select-option>
                         <ion-select-option value="edu">การศึกษา</ion-select-option>
-                        <ion-select-option value="valun">กิจกรรมอาสา</ion-select-option>
+                        <ion-select-option value="valun">กิจกรรม</ion-select-option>
                         <ion-select-option value="other">อื่นๆ</ion-select-option>
                     </ion-select>
                 </ion-item>
 
                 <ion-item>
-                    <ion-label>วันที่ เวลา</ion-label>
-                    <ion-datetime [(ngModel)]="Post.datetime" name="datetime" displayFormat="D MMM YYYY H:mm" min="2020" max="2025" value="2005-06-17T11:06Z" placeholder="เลือกเวลา"></ion-datetime>
-                </ion-item>
+                    <ion-label>วันที่ </ion-label>
+                    <!-- <ion-input type="date" [(ngModel)]="Post.datetime" name="datetime" value="{{today | date: 'HH:mm dd/MM/yyyy'}}"></ion-input> -->
 
+                    <ion-datetime [(ngModel)]="Post.datetime" name="datetime" displayFormat="DD MMM YYYY" value="01 " min="2021" max="2025" placeholder="เลือกเวลา"></ion-datetime>
+                </ion-item>
                 <ion-item>
-                    <ion-label>สถานที่</ion-label>
-                    <ion-textarea [(ngModel)]="Post.place" name="place" placeholder="ชื่อร้าน ชื่อสถานที่"></ion-textarea>
+                    <ion-row>
+                        <ion-item>
+                            <ion-label>เวลาเริ่ม</ion-label>
+                            <ion-datetime [(ngModel)]="Post.starttime" name="starttime" displayFormat="HH : mm" value="00 : 00" placeholder="เวลาเริ่ม"></ion-datetime>
+                        </ion-item>
+                        <ion-item>
+                            <ion-label>เวลาสิ้นสุด</ion-label>
+                            <ion-datetime [(ngModel)]="Post.endtime" name="endtime" displayFormat="HH : mm" value="00 : 00" placeholder="เวลาสิ้นสุด"></ion-datetime>
+                        </ion-item>
+                    </ion-row>
+                </ion-item>
+                <ion-item>
+                    <ion-label position="floating">สถานที่(ชื่อร้าน ชื่อสถานที่)</ion-label>
+                    <ion-input [(ngModel)]="Post.place" name="place"></ion-input>
                 </ion-item>
 
                 <ion-item>
                     <ion-row>
                         <ion-col>
-                            <!--ion-button fill="solid" size="large" color="success" (click)="showlocation()">Map</ion-button-->
                             <ion-label position="fixed">ปักหมุดสถานที่</ion-label>
                         </ion-col>
                         <ion-col>
-                            <!-- <ion-input  [(ngModel)]="Post.location" name="location"></ion-input> -->
-                            <ion-button expand="block" color="success" class="ion-text-center">
+                            <ion-button expand="block" color="success" class="ion-text-center" href="map">
                                 <ion-icon name="location-outline"></ion-icon>
                             </ion-button>
                         </ion-col>
@@ -62,14 +87,17 @@
 
                 <ion-item>
                     <ion-label position="fixed">จำนวนคน</ion-label>
-                    <ion-input type="number" value={number} [(ngModel)]="Post.amount" name="amount" placeholder="ใส่จำนวนคน เช่น 4"></ion-input>
+                    <ion-input [(ngModel)]="Post.amount" name="amount" placeholder="ใส่จำนวนคน เช่น 4"></ion-input>
                 </ion-item>
 
             </ion-list>
 
             <!-- <ion-button fill="solid" size="large" color="success">POST</ion-button> -->
         </form>
-        <ion-button fill="solid" expand="block" color="primary" (click)="addpost()">
+        <!-- <ion-button fill="solid" expand="block" color="warning" routerLink="/home" (click)="addpost()">
+            POST
+        </ion-button> -->
+        <ion-button fill="solid" expand="block" color="warning" (click)="addpost()">
             POST
         </ion-button>
     </ion-card>

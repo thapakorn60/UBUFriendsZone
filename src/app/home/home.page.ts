@@ -1,9 +1,28 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { NavController, NavParams, AlertController } from '@ionic/angular';
+/* tslint:disable */
+import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { NavController, NavParams, AlertController, ToastController } from '@ionic/angular';
 import { PostsService } from '../api/posts.service';
 import { MenuController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
 import { Subscription } from 'rxjs';
+import { Router } from '@angular/router';
+import { AngularFireAuth } from '@angular/fire/auth';
+
+// import * as firebase from 'firebase';
+import '@firebase/auth';
+import { AuthenticateService } from '../services/authentication.service';
+
+import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { UserProfile } from 'src/app/models/user';
+import { HttpClient } from '@angular/common/http';
+import { LoginPage } from '../login/login.page';
+import { UsersService } from '../api/users.service';
+import { stringify } from '@angular/compiler/src/util';
+import { JoinsService } from '../api/joins.service';
+import { ModalController } from '@ionic/angular';
+import { CommentsPage } from '../comments/comments.page';
+
 
 
 
@@ -13,87 +32,404 @@ import { Subscription } from 'rxjs';
   styleUrls: ['home.page.scss'],
 })
 export class HomePage implements OnInit {
+  public posts: PostsService;
+  public userProfile: UserProfile;
+
   post: Subscription;
+  user: any = {};
+  userEmail: string;
+  allPost;
+  Post: any = [];
+  email_login = ""
+  data_user_login = {}
+  url = 'http://localhost:3000/user/getuserDetail';
+  detail: Object;
+  style: any;
+  dataDetail: any;
+  postData: any;
+  userid: string;
+  status: boolean;
+  buttonColor = "primary";
+  onePost: Object;
+  joinerId: string;
+  dataPost: Object;
+
+  dataJoin: { response: any; };
+  allJoin: any;
+  joinData: any;
+  postDetail: any;
+  public statusJoin: boolean;
+  public join: boolean;
+  public notjoin: boolean;
+  public userId;
+
   constructor(public alertController: AlertController,
-              private postsService: PostsService,
-              private menu: MenuController,
-              public popoverController: PopoverController,
-              private postService: PostsService) {}
+    private postsService: PostsService,
+    private menu: MenuController,
+    public popoverController: PopoverController,
+    private postService: PostsService,
+    private router: Router,
+    private http: HttpClient,
+    private navCtrl: NavController,
+    private profileService: ProfileService,
+    private authService: AuthService,
+    private userService: UsersService,
+    private joinService: JoinsService,
+    public modalController: ModalController) {
 
-  // async presentPopover(ev: any) {
-  //     const popover = await this.popoverController.create({
-  //         component: PopoverComponent,
-  //             cssClass: 'my-custom-class',
-  //             event: ev,
-  //             translucent: true
-  //             });
-  //     return await popover.present();
-  //   }
+    this.email_login = localStorage.getItem('data_user');
+    this.http.get<{ messaeg: string, email: string, status: any }>(this.url + '/' + this.email_login).subscribe((res) => {
+      this.data_user_login = res
+
+    })
+  }
 
 
-  async showPrompt2() {
+  async addtojoin(Post_id: string) {
     const alert = await this.alertController.create({
       header: 'สนใจ',
       message: 'คุณสนใจที่จะเข้าร่วมกิจกรรมนี้',
-    buttons: [
-      {
-        text: 'ยกเลิก',
-        cssClass: 'secondary',
-        handler: (blah) => {
-          console.log('Cancel');
-      }
-    },
-      {
-        text: 'สนใจ',
-        handler: () => {
-          console.log('Saved');
-          // console.log(data.name1);
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancel');
+          }
+        },
+        {
+          text: 'สนใจ',
+          handler: async () => {
+            console.log('Send request to Event');
+
+
+            this.postService.getallPost().subscribe(result => {
+              this.allPost = result.response;
+              console.log(this.allPost);
+
+            });
+
+            this.postService.getidPost(Post_id).subscribe(data => {
+              this.dataPost = data;
+
+              const postId = this.dataPost['_id']
+              const postName = this.dataPost['eventname']
+              const ownerId = this.dataPost['userid']
+              const ownerName = this.dataPost['name']
+              const joinerName = this.data_user_login['name']
+              this.joinerId = localStorage.getItem('id_user');
+              this.status = false;
+              const datetime = this.dataPost['datetime']
+              const starttime = this.dataPost['starttime']
+              const endtime = this.dataPost['endtime']
+              const place = this.dataPost['place']
+              const type = this.dataPost['type']
+              this.joinService.addJoin(postId, postName, ownerName, ownerId, joinerName, this.joinerId, this.status, datetime, starttime, endtime, place, type);
+              // this.onePost = data;
+              // const name = this.onePost['name'];
+              // const eventname = this.onePost['eventname'];
+              // const userid = this.onePost['userid'];
+              // const description = this.onePost['description'];
+              // const type = this.onePost['type'];
+              // const datetime = this.onePost['datetime'];
+              // const starttime = this.onePost['starttime'];
+              // const endtime = this.onePost['endtime'];
+              // const place = this.onePost['place'];
+              // const location = this.onePost['location'];
+              // const amount = this.onePost['amount'];
+              // const reqtojoin = this.onePost['reqtojoin'];
+              // this.joinerId = localStorage.getItem('id_user');
+              // this.status = false;
+
+              // var varPost= {
+              //   userid,
+              //   name,
+              //   eventname,
+              //   description,
+              //   type,
+              //   datetime,
+              //   starttime,
+              //   endtime,
+              //   place,
+              //   location,
+              //   amount,
+              //   reqtojoin
+              // }
+              // console.log(varPost);
+
+              // console.log("this is a " + userid);
+              // this.postService.tojoin(Post_id, name, eventname, userid, description, type, datetime,  
+              //  starttime, endtime, place, location, amount, reqtojoin, this.joinerId, this.status,);
+            });
+            // this.buttonColor = 'danger';
+            console.log()
+          }
         }
-      }
-    ]
-  });
+      ]
+    });
     await alert.present();
   }
 
+
+  async leavejoin(Post_id: string) {
+    const alert = await this.alertController.create({
+      header: 'ยกเลิกเข้าร่วมอีเว้นท์',
+      message: 'คุณต้องการที่จะยกเลิกการเข้าร่วมอีเว้นท์',
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancel');
+          }
+        },
+        {
+          text: 'ตกลง',
+          handler: () => {
+            console.log();
+            // this.joinService.leaveJoin(Post_id);
+            // this.postService.getidPost(Post_id).subscribe(data => {
+            // this.joinerId = localStorage.getItem('id_user');
+            // if () { }
+            //   this.dataPost = data;
+            //   const postId = this.dataPost['_id']
+            //   const postName = this.dataPost['eventname']
+            //   this.joinerId = localStorage.getItem('id_user');
+            //   this.status = false;
+            //   this.joinService.addJoin(postId, postName, this.joinerId, this.status);
+            // });
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  // --------------------------------------------------------------------------------------------------------
+
+  // --------------------------------------------------------------------------------------------------------
+
   ngOnInit() {
-    // this.post = this.postsService.getallPost().subscribe(data => {
-    //   console.log(data);
+    this.userService.getUser().subscribe(user => {
+      this.userId = user['_id'];
+      console.log(this.userId);
+    });
+    // console.log(this.userId);
+
+    this.profileService.getUserProfile().then(profile$ => {
+      profile$.subscribe(userProfile => {
+        this.userProfile = userProfile;
+      });
+    });
+    // this.userService.getUser().subscribe(result => {
+    //   this.detail = result;
+    //   console.log(this.detail['lifestyle']);
+    //   this.style = this.detail['lifestyle'];
+    //   console.log(this.style.toString());
+    //   this.postService.getallPost().subscribe(data => {
+    //     this.allPost = data.response;
+    //     for(let i = 0; i < this.allPost.length; i++) {
+    //       // console.log(this.allPost[i]);
+    //       this.postData = this.allPost[i];
+    //     }
+    //   });
     // });
 
-    // this.post = this.postService.getallPost().subscribe(data => {console.log(data);
-    // });
+    this.postService.getallPost().subscribe(result => {
+
+      this.allPost = result.response;
+      console.log(this.allPost);
+      const iduser = localStorage.getItem('id_user');
+      this.join = true;
+      // this.notjoin = false;
+
+      this.joinService.getJoin().subscribe(data => {
+        this.allJoin = data.response;
+
+        for (let idd in this.allPost) {
+          // this.join = true;
+          // this.notjoin = false;
+          this.postData = this.allPost[idd];
+          const idpost = this.postData['_id'];
+
+          // console.log('postname: ', this.postData['eventname']);**************
+          // console.log('post id: ',this.postData['_id']);***************
+          // console.log('iduser: ',iduser);
+          this.statusJoin = false;
+          this.join = true;
+          // this.notjoin = false;
+          // console.log('*');
+
+          // console.log(i);
+          for (let j in this.allJoin) {
+            // this.statusJoin = Boolean;
+            this.joinData = this.allJoin[j];
+            const post_Id = this.joinData['postId'];
+            const joiner_Id = this.joinData['joinerId'];
+            // console.log("joinPost :",this.joinData['postId']);
+            // console.log("joinUser :",this.joinData['joinerId']);
+
+            if (idpost === post_Id && iduser === joiner_Id) {
+              this.statusJoin = true;
+              // console.log('status: ',this.statusJoin);
+
+              // console.log('status: อันนี้แหล่ะใช่เลย');  
+            } else {
+              // this.statusJoin = false;             
+              // console.log('status: ไม่ใช่อันนี้'); 
+            }
+            // console.log('*');
+
+          }
+          // console.log(this.statusJoin);**********
+          if (this.statusJoin == true) {
+
+            this.join = false;
+            this.notjoin = true;
+            // console.log('โพสนี้ใช่');***********
+
+          } else {
+            this.join = true;
+            // this.notjoin = false;
+            // console.log('โพสนี้ไม่ใช่');************
+          }
+          // console.log(this.join);
+          // console.log(this.notjoin);
+
+          // const statusJoinNaja = this.statusJoin;
+          console.log('-------------------------------------------');
+        }
+
+
+
+      });
+
+
+      // -------------------------------------------------------------------------------------
+
+
+    });
   }
+
   openMenu() {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }
 
-  async deletePost() {
+  async deletePost(id: string) {
     const alert = await this.alertController.create({
       header: 'Delete',
       message: 'คุณต้องการที่จะลบโพส',
-    buttons: [
-      {
-        text: 'ยกเลิก',
-        cssClass: 'secondary',
-        handler: (blah) => {
-          console.log('Cancel');
-      }
-    },
-      {
-        text: 'ตกลง',
-        handler: () => {
-          console.log('Deleted');
-          // console.log(data.name1);
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancel');
+          }
+        },
+        {
+          text: 'ตกลง',
+          handler: () => {
+            console.log(id);
+            this.postService.deletePost(id);
+          }
         }
-      }
-    ]
-  });
+      ]
+    });
     await alert.present();
   }
   // ngOnDestroy() {
   //   this.post.unsubscribe();
   // }
+  async logOut(): Promise<void> {
+    await this.authService.logout();
+    localStorage.removeItem('data_user')
+    this.router.navigateByUrl('login');
+  }
 
+  // -----------------------------test function--------------------------------------------
+
+  async Join() {
+    const alert = await this.alertController.create({
+      header: 'สนใจเข้าร่วมอีเว้นท์',
+      message: 'คุณต้องการที่จะเข้าร่วมอีเว้นท์',
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancel');
+          }
+        },
+        {
+          text: 'ตกลง',
+          handler: () => {
+            console.log('confirm');
+              this.join = false;
+            // this.notjoin = true;
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+
+  async notJoin(Post_id: string) {
+    const alert = await this.alertController.create({
+      header: 'ยกเลิกเข้าร่วมอีเว้นท์',
+      message: 'คุณต้องการที่จะยกเลิกการเข้าร่วมอีเว้นท์',
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Cancel');
+          }
+        },
+        {
+          text: 'ตกลง',
+          handler: () => {
+            console.log('confirm');
+              this.join = true;
+            // this.notjoin = false;
+            // this.postService.getidPost(Post_id).subscribe(data => {
+            //   this.dataPost = data;
+            //   const postId = this.dataPost['_id'];
+            //   const joinerId = localStorage.getItem('id_user');
+            //   this.joinService.leaveJoin(Post_id);
+
+            // });
+            // this.joinService.getJoin().subscribe(data => {
+            //   this.nowjoin = data;
+            //   const idUser = localStorage.getItem('id_user');
+            //   const postId = this.nowjoin['postId'];
+            //   console.log(postId);
+            // });
+
+
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
+  async presentModal(name: string, id: string , uid: string) {
+    // console.log(id);
+    const modal = await this.modalController.create({
+      component: CommentsPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        eventname: name,
+        postId: id,
+        userid: uid
+      }
+    });
+    return await modal.present();
+  }
 
 }
+
+

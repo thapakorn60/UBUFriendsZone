@@ -199,16 +199,21 @@
 }
 
 * {
-    font-family: 'Helvetica-Neue' !important;
+    font-family: 'maledpan' !important;
+}
+
+@font-face {
+    font-family: 'maledpan';
+    src: url('../assets/fonts/Maledpan-Regular.ttf'); //mine
+    // src: url('path/to/your/font/file');//path to your font file
 }
 
 // ion-content {
 //     --ion-background-color: #111D12;
 // }
-ion-card {
-    --ion-background-color: #7e7e7e;
-}
-
+// ion-card {
+//     --ion-background-color: #7e7e7e;
+// }
 // ion-header {
 //     --ion-background-color:  #fffd8e;
 // }

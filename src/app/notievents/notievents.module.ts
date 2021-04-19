@@ -5,8 +5,10 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { NotieventsPageRoutingModule } from './notievents-routing.module';
-
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { NotieventsPage } from './notievents.page';
+import { AccordionListComponent } from '../components/accordion-list/accordion-list.component';
+
 
 @NgModule({
   imports: [
@@ -15,6 +17,6 @@ import { NotieventsPage } from './notievents.page';
     IonicModule,
     NotieventsPageRoutingModule
   ],
-  declarations: [NotieventsPage]
+  declarations: [NotieventsPage, AccordionListComponent]
 })
 export class NotieventsPageModule {}

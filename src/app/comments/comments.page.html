@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-toolbar color="dark">
+        <ion-row>
+            <ion-button fill="clear" color="warning" (click)="dismiss()">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+            <ion-title color="warning">{{eventname}}</ion-title>
+        </ion-row>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark" *ngIf="(ownerId == userId || userid == userId) || (joinerId == userId && status == true)">
+    <div *ngFor="let data of thisComment">
+        <ion-item *ngIf="data.ownerId != userId && data.postId == postId" color="otherUsers">
+            <!-- <ion-item *ngIf="data.ownerId != userId && data.postId == postId && (ownerId == userId || userid == userId) || (joinerId == userId && status == true)"> -->
+
+            <ion-thumbnail slot="start">
+                <img src="https://cdn1.iconfinder.com/data/icons/website-internet/48/website_-_male_business-512.png">
+            </ion-thumbnail>
+            <ion-label>
+                <ion-text color="warning">
+                    <h2>{{data.ownerName}}</h2>
+                </ion-text>
+
+                <p>
+                    <ion-card-subtitle>{{data.createdAt | date: "dd/MM/yyyy HH:mm"}}</ion-card-subtitle>
+                </p>
+
+
+
+                <h3>{{data.description}}</h3>
+
+            </ion-label>
+
+        </ion-item>
+
+
+        <ion-item color="warning" *ngIf="data.ownerId == userId && data.postId == postId">
+            <ion-thumbnail slot="start">
+                <img src="https://cdn1.iconfinder.com/data/icons/website-internet/48/website_-_male_business-512.png">
+            </ion-thumbnail>
+            <ion-label>
+                <h2>{{data.ownerName}}</h2>
+                <ion-card-subtitle>{{data.createdAt | date: "dd/MM/yyyy HH:mm"}}</ion-card-subtitle>
+                <p>{{data.description}}</p>
+            </ion-label>
+            <!-- <ion-button color="warning" size="small" fill="outline" (click)="test()">
+                <ion-icon name="pencil-outline" color="dark"></ion-icon>
+            </ion-button> -->
+            <ion-button color="warning" size="small" fill="outline" (click)="deleteComment(data._id)">
+                <ion-icon name="trash-outline" color="dark"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </div>
+    <!-- <ion-card *ngIf="(ownerId != userId || joinerId != userId) && status == false"> -->
+
+    <!-- </ion-card> -->
+
+
+</ion-content>
+<ion-content *ngIf="userid != userId && (joinerId != userId || (joinerId == userId && status == false))" color="dark">
+    <ion-label color="danger">You are not allow</ion-label>
+</ion-content>
+
+
+<ion-footer>
+    <ion-card *ngIf="(ownerId == userId || userid == userId) || (joinerId == userId && status == true)">
+        <ion-row>
+            <ion-input [(ngModel)]="Comment.description" placeholder="พิมพ์ที่นี่"></ion-input>
+            <ion-button color="warning" (click)="addComment()">
+                <ion-icon name="paper-plane"></ion-icon>
+            </ion-button>
+        </ion-row>
+    </ion-card>
+</ion-footer>

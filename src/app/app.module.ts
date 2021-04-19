@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
@@ -12,19 +12,38 @@ import { HttpClientModule } from '@angular/common/http';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { PopoverController } from '@ionic/angular';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { AngularFireAuth, AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'src/environments/environment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
-  imports: [BrowserModule, HttpClientModule, IonicModule.forRoot(), AppRoutingModule],
+  imports: [BrowserModule,
+      HttpClientModule,
+      IonicModule.forRoot(),
+      AppRoutingModule,
+      FormsModule,
+      ReactiveFormsModule,
+      AngularFireModule.initializeApp(environment.firebase),
+    AngularFireAuthModule
+    ],
   providers: [
     StatusBar,
     Geolocation,
     SplashScreen,
     PopoverController,
+    GooglePlus,
+    AngularFireAuth,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    GoogleMaps
+    GoogleMaps,
+    InAppBrowser
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule {}
