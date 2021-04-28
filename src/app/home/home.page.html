@@ -70,7 +70,7 @@
                     <ion-col class="ion-align-self-center">
                         <ion-button href="notifications" color="dark" fill="clear" size="large">
                             <ion-icon expand="block" name="notifications"></ion-icon>
-                            <ion-badge id="notifications-badge" color="danger"></ion-badge>
+                            <ion-badge id="notifications-badge" color="danger">{{total}}</ion-badge>
                         </ion-button>
                     </ion-col>
 
@@ -217,15 +217,49 @@
                                 <div>สนใจ</div>
                             </ion-button>
                         </ion-col>
-                        <ion-col class="ion-text-center">
-                            <ion-list>
-                                <!-- <ion-button (click)="Join()" color="primary">
-                                    <p>สนใจ</p>
-                                </ion-button> -->
-                                <ion-button *ngIf="" (click)="notJoin(listPost._id)" color="danger">
+                        <ion-col>
+                            <!-- <ion-button *ngIf="!isMenuOpen" (click)="Join(listPost._id)"></ion-button> -->
+                            <!-- <ion-button *ngIf="!((join.postId == listPost._id) && join.ownerId != userId)" (click)="Join()" color="success">
+                                <p>สนใจ</p>
+                            </ion-button> -->
+                            <!-- </ion-col> -->
+                            <ion-col class="ion-text-center" *ngFor="let join of thisJoin">
+                                <!-- <div *ngIf="(join.postId == listPost._id && join.joinerId == userId && join.ownerId != userId) "> -->
+                                <!-- <p>ยกเลิก</p> -->
+
+                                <!-- <ion-button (click)="Join(listPost._id)" color="success"> -->
+                                <!-- <p>สนใจ</p> -->
+                                <!-- </ion-button> -->
+                                <!-- </div> -->
+                                <div *ngIf="join.postId == listPost._id && join.joinerId == userId && join.ownerId != userId">
+                                    <!-- <p>ยกเลิก</p> -->
+
+                                    <ion-button (click)="notJoin(listPost._id)" color="danger">
+                                        <p>ยกเลิก</p>
+                                    </ion-button>
+                                </div>
+                                <!-- <p #text>{{join}}</p> -->
+                                <!-- <ion-toggle [(ngModel)]="toggle01" (ionChange)="toggleTwo()"></ion-toggle> -->
+                                <!-- <ion-toggle [(ngModel)]="toggle02" (ionChange)="toggleOne()"></ion-toggle> -->
+                                <!-- <p #text>test</p>
+                            <ion-button (click)="onShow(text)">Show</ion-button>
+                            <ion-button (click)="onHide(text)" color="danger">hide</ion-button> -->
+
+                                <!-- <ion-button #text1 color="danger" (click)="onHide(text)">Hide</ion-button> -->
+                                <!-- **********<ion-button *ngIf="(join.postId == listPost._id) && join.ownerId != userId" color="danger" (click)="notJoin(listPost._id)">
                                     <p>ยกเลิก</p>
-                                </ion-button>
-                            </ion-list>
+                                </ion-button> -->
+                                <!-- <ion-list> -->
+                                <!-- <p>{{join.joinerId}}</p> -->
+                                <!-- <ion-button *ngIf="joinChecked == null" (click)="Join()" color="primary"> -->
+                                <!-- *ngIf="thisJoin == null || join.ownerId != userId" -- (join.postId != listPost._id || join.postId == listPost._id) && -->
+                                <!-- <p>สนใจ</p> -->
+                                <!-- </ion-button> -->
+                                <!-- <ion-button *ngIf="thisJoin != null && thisJoin.joinerId == userId && listPost.userid != userId" color="danger">
+                                    <p>ยกเลิก</p>
+                                </ion-button> -->
+                                <!-- </ion-list> -->
+                            </ion-col>
                         </ion-col>
 
                     </ion-row>

@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AlertController, IonSlides, ModalController } from '@ionic/angular';
 import { JoinsService } from 'src/app/api/joins.service';
+import { NotificationsService } from 'src/app/api/notifications.service';
+
 
 @Component({
   selector: 'app-joiner-event',
@@ -19,7 +21,8 @@ export class JoinerEventPage implements OnInit {
 
   constructor(public modalCtrl: ModalController,
               public joinService: JoinsService,
-              public alertController: AlertController) { }
+              public alertController: AlertController,
+              public notification: NotificationsService) { }
 
   ngOnInit() {
     console.log('id : ', this.postId);
@@ -62,6 +65,8 @@ export class JoinerEventPage implements OnInit {
               const endtime = this.dataJoin.endtime;
               const place = this.dataJoin.place;
               const type = this.dataJoin.type;
+              const description = 'อนุมัติแล้ว';
+              const read = false;
 
               const varJoin = {
                 postId,
@@ -93,6 +98,9 @@ export class JoinerEventPage implements OnInit {
                 endtime,
                 place,
                 type);
+              // -------------------
+              // tslint:disable-next-line:max-line-length
+              this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, description, read);
           });
         }
         }

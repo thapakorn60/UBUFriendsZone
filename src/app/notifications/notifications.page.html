@@ -29,7 +29,7 @@
 
         </ion-tab-bar>
     </ion-tabs> -->
-    <ion-card>
+    <!-- <ion-card>
         <ion-item color="warning">
 
             <ion-icon name="football-outline"></ion-icon>
@@ -40,16 +40,16 @@
                 <h2>ที่ หนองอิเจมส์</h2>
                 <p>04/03/2021 06:30 ถึง 07:40</p>
                 <p>ออกกำลังกายยามเช้า</p>
-            </ion-label>
+            </ion-label> -->
 
-            <!-- <div>
+    <!-- <div>
                 <ion-badge id="notifications-badge" color="danger">1</ion-badge>
             </div> -->
-
+    <!-- 
         </ion-item>
 
-    </ion-card>
-    <ion-card>
+    </ion-card> -->
+    <!-- <ion-card>
         <ion-item color="danger">
 
             <ion-icon name="football-outline"></ion-icon>
@@ -60,33 +60,50 @@
                 <h2>ที่ หนองอิเจมส์</h2>
                 <p>04/03/2021 06:30 ถึง 07:40</p>
                 <p>ออกกำลังกายยามเช้า</p>
-            </ion-label>
+            </ion-label> -->
 
-            <!-- <div>
+    <!-- <div>
                 <ion-badge id="notifications-badge" color="danger">1</ion-badge>
             </div> -->
 
-        </ion-item>
-    </ion-card>
-    <ion-card>
+    <!-- </ion-item>
+    </ion-card> -->
+    <ion-card *ngFor="let noti of allNoti">
+        <ion-button size="small">
+            <ion-icon name="checkmark-outline"></ion-icon>mark read
+        </ion-button>
+        <ion-button color="danger" fill="clear" (click)="delete(noti._id)">
+            <ion-icon name="trash"></ion-icon>
+        </ion-button>
         <ion-item>
 
             <ion-icon name="fast-food-outline"></ion-icon>
             &nbsp;&nbsp;&nbsp;
             <ion-label>
-                <p>Your events</p>
-                <h2>ร้านลุงตัน</h2>
-                <p>10/12/2020 12:30 ถึง 13:30</p>
-                <p>หาเพื่อนกินข้าว ใครว่างมาเลยครับ</p>
+                <p>{{noti.postName}}</p>
+                <h2>{{noti.place}}</h2>
+
+                <p></p>
             </ion-label>
 
-            <div>
-                <ion-badge id="notifications-badge" color="danger">1</ion-badge>
+            <div *ngIf="noti.status == true">
+                <ion-label>
+                    <p>
+                        <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon>{{noti.description}}
+                    </p>
+                    <p>by {{noti.ownerName}}</p>
+                </ion-label>
             </div>
+            <!-- <div>
+                <p>
+                    <ion-icon name="close-sharp"></ion-icon>วร้ายโดนปฏิเสธ
+                </p>
+            </div> -->
+            <!-- <ion-badge id="notifications-badge" color="danger">1</ion-badge> -->
 
         </ion-item>
     </ion-card>
-    <ion-card>
+    <!-- <ion-card>
 
         <ion-item>
             <ion-avatar>
@@ -101,9 +118,9 @@
                 <p>14:00 น.</p>
             </div>
         </ion-item>
-    </ion-card>
+    </ion-card> -->
 
-    <ion-card>
+    <!-- <ion-card>
 
         <ion-item>
             <ion-avatar>
@@ -118,7 +135,7 @@
                 <p>11:00 น.</p>
             </div>
         </ion-item>
-    </ion-card>
+    </ion-card> -->
 
 
 </ion-content>

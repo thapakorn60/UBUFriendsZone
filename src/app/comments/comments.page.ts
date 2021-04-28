@@ -48,7 +48,7 @@ export class CommentsPage implements OnInit {
               ) {}
 
   ngOnInit() {
-    console.log('name : ',this.eventname);
+    console.log('name : ', this.eventname);
     console.log('Postid : ', this.postId);
     console.log('userid : ', this.userid);
     this.userService.getUser().subscribe(user => {

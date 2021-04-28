@@ -1,10 +1,9 @@
 /* tslint:disable */
-import { Component, OnDestroy, OnInit, NgZone } from '@angular/core';
+import { Component, OnDestroy, OnInit, NgZone, Renderer2, ChangeDetectorRef } from '@angular/core';
 import { NavController, NavParams, AlertController, ToastController } from '@ionic/angular';
-import { PostsService } from '../api/posts.service';
 import { MenuController } from '@ionic/angular';
 import { PopoverController } from '@ionic/angular';
-import { Subscription } from 'rxjs';
+import { empty, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
@@ -12,16 +11,19 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import '@firebase/auth';
 import { AuthenticateService } from '../services/authentication.service';
 
-import { AuthService } from 'src/app/services/auth.service';
-import { ProfileService } from 'src/app/services/profile.service';
 import { UserProfile } from 'src/app/models/user';
 import { HttpClient } from '@angular/common/http';
 import { LoginPage } from '../login/login.page';
-import { UsersService } from '../api/users.service';
 import { stringify } from '@angular/compiler/src/util';
-import { JoinsService } from '../api/joins.service';
 import { ModalController } from '@ionic/angular';
 import { CommentsPage } from '../comments/comments.page';
+
+import { AuthService } from 'src/app/services/auth.service';
+import { PostsService } from '../api/posts.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { UsersService } from '../api/users.service';
+import { JoinsService } from '../api/joins.service';
+import { NotificationsService } from '../api/notifications.service';
 
 
 
@@ -62,6 +64,12 @@ export class HomePage implements OnInit {
   public join: boolean;
   public notjoin: boolean;
   public userId;
+  thisJoin: any;
+  joinChecked: any;
+  item = [];
+  public isMenuOpen : boolean;
+  public ishidden = false;
+  total: any;
 
   constructor(public alertController: AlertController,
     private postsService: PostsService,
@@ -75,7 +83,9 @@ export class HomePage implements OnInit {
     private authService: AuthService,
     private userService: UsersService,
     private joinService: JoinsService,
-    public modalController: ModalController) {
+    public modalController: ModalController,
+    private render: Renderer2,
+    public notiService: NotificationsService) {
 
     this.email_login = localStorage.getItem('data_user');
     this.http.get<{ messaeg: string, email: string, status: any }>(this.url + '/' + this.email_login).subscribe((res) => {
@@ -221,6 +231,11 @@ export class HomePage implements OnInit {
         this.userProfile = userProfile;
       });
     });
+    this.notiService.getNotification().subscribe(data => {
+      this.total = data.response.length;
+      console.log('noti : ',this.total);
+      
+    })
     // this.userService.getUser().subscribe(result => {
     //   this.detail = result;
     //   console.log(this.detail['lifestyle']);
@@ -243,66 +258,86 @@ export class HomePage implements OnInit {
       this.join = true;
       // this.notjoin = false;
 
-      this.joinService.getJoin().subscribe(data => {
-        this.allJoin = data.response;
-
-        for (let idd in this.allPost) {
-          // this.join = true;
-          // this.notjoin = false;
-          this.postData = this.allPost[idd];
-          const idpost = this.postData['_id'];
-
-          // console.log('postname: ', this.postData['eventname']);**************
-          // console.log('post id: ',this.postData['_id']);***************
-          // console.log('iduser: ',iduser);
-          this.statusJoin = false;
-          this.join = true;
-          // this.notjoin = false;
-          // console.log('*');
-
-          // console.log(i);
-          for (let j in this.allJoin) {
+      
+      // for (let idd in this.allPost) {
+        // this.join = true;
+        // this.notjoin = false;
+        // this.postData = this.allPost[idd];
+        // const idpost = this.postData['_id'];
+        // console.log('postname: ', this.postData['eventname']);**************
+        // console.log('post id: ',this.postData['_id']);***************
+        // console.log('iduser: ',iduser);
+        this.statusJoin = false;
+        this.join = true;
+        // this.notjoin = false;
+        // console.log('*');
+        this.joinService.getJoin().subscribe(data => {
+          this.allJoin = data.response;
+          this.thisJoin = this.allJoin.filter(join => join.joinerId == iduser);
+          
+          // this.ishidden = false;
+          for(let i in this.thisJoin){
+            // this.joinChecked = this.thisJoin[i];
+            this.item.push(this.thisJoin[i]);
+          }
+          console.log(this.item);
+          // for (let j in this.allJoin) {
             // this.statusJoin = Boolean;
-            this.joinData = this.allJoin[j];
-            const post_Id = this.joinData['postId'];
-            const joiner_Id = this.joinData['joinerId'];
+            console.log('-------------------------------------------');
+          });
+          // }
+            // ----------------------------------------------------------
+            // this.joinData = this.allJoin[j];
+            // const post_Id = this.joinData['postId'];
+            // const joiner_Id = this.joinData['joinerId'];
+            // --------------------------------------------------------------
             // console.log("joinPost :",this.joinData['postId']);
             // console.log("joinUser :",this.joinData['joinerId']);
-
-            if (idpost === post_Id && iduser === joiner_Id) {
-              this.statusJoin = true;
+            
+            // if (idpost === post_Id && iduser === joiner_Id) {
+              // this.statusJoin = true;
               // console.log('status: ',this.statusJoin);
-
+              
               // console.log('status: อันนี้แหล่ะใช่เลย');  
-            } else {
-              // this.statusJoin = false;             
+              // } else {
+                // this.statusJoin = false;             
               // console.log('status: ไม่ใช่อันนี้'); 
-            }
+            // }
             // console.log('*');
-
-          }
+          // }
           // console.log(this.statusJoin);**********
-          if (this.statusJoin == true) {
-
-            this.join = false;
-            this.notjoin = true;
+          // console.log(this.thisJoin.status);
+          
+          
+          // if (this.statusJoin == true) {
+            
+            // this.join = false;
+            // this.notjoin = true;
             // console.log('โพสนี้ใช่');***********
-
-          } else {
-            this.join = true;
-            // this.notjoin = false;
-            // console.log('โพสนี้ไม่ใช่');************
-          }
-          // console.log(this.join);
-          // console.log(this.notjoin);
-
-          // const statusJoinNaja = this.statusJoin;
-          console.log('-------------------------------------------');
-        }
-
-
-
-      });
+            
+            // } else {
+              // this.join = true;
+              // this.notjoin = false;
+              // console.log('โพสนี้ไม่ใช่');************
+              // }
+              // console.log(this.join);
+              // console.log(this.notjoin);
+              
+              // const statusJoinNaja = this.statusJoin;
+              // console.log(this.thisJoin);
+              // for(let j in this.thisJoin){
+              //   this.joinChecked = this.thisJoin[j]
+                // if(this.thisJoin == null){
+                //   console.log('null');
+                  
+                // }else if (this.thisJoin != null) {
+                // console.log(this.joinChecked.joinerId);
+                // }
+              // }
+            // }
+            
+            
+            
 
 
       // -------------------------------------------------------------------------------------
@@ -350,7 +385,7 @@ export class HomePage implements OnInit {
 
   // -----------------------------test function--------------------------------------------
 
-  async Join() {
+  async Join(PostId: string) {
     const alert = await this.alertController.create({
       header: 'สนใจเข้าร่วมอีเว้นท์',
       message: 'คุณต้องการที่จะเข้าร่วมอีเว้นท์',
@@ -367,7 +402,11 @@ export class HomePage implements OnInit {
           handler: () => {
             console.log('confirm');
               this.join = false;
-            // this.notjoin = true;
+            this.notjoin = true;
+            console.log(this.join);
+            console.log(this.notjoin);
+            this.isMenuOpen = !this.isMenuOpen;
+
           }
         }
       ]
@@ -393,7 +432,12 @@ export class HomePage implements OnInit {
           handler: () => {
             console.log('confirm');
               this.join = true;
-            // this.notjoin = false;
+            this.notjoin = false;
+            console.log(this.join);
+            console.log(this.notjoin);
+            this.isMenuOpen = !this.isMenuOpen;
+
+            
             // this.postService.getidPost(Post_id).subscribe(data => {
             //   this.dataPost = data;
             //   const postId = this.dataPost['_id'];
@@ -429,6 +473,24 @@ export class HomePage implements OnInit {
     });
     return await modal.present();
   }
+  public onShow(controlToShow) {
+    // this.ishidden = false;
+    // if(this.ishidden == false){
+    //   this.ishidden = true;
+    this.render.setStyle(controlToShow, 'visibility', 'visible');
+    // }else{
+    //   this.ishidden = false;
+    //       this.render.setStyle(controlToShowandHide, 'visibility', 'hidden');
+          
+    //     }
+
+    // this.joinChecked = this.render.setStyle(controlToShowandHide, 'visibility', 'hidden');
+    // this.joinChecked != this.joinChecked;
+  }
+  public onHide(controlToHide) {
+    this.render.setStyle(controlToHide, 'visibility', 'hidden');
+  }
+
 
 }
 
