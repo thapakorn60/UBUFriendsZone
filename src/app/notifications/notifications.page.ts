@@ -12,6 +12,7 @@ import { NavController, NavParams, AlertController, ToastController } from '@ion
 })
 export class NotificationsPage implements OnInit {
   allNoti: any;
+  notiData: any;
 
   constructor(public notiService: NotificationsService,
               public alertController: AlertController) { }
@@ -20,6 +21,46 @@ export class NotificationsPage implements OnInit {
     this.notiService.getNotification().subscribe(data => {
       this.allNoti = data.response;
       console.log(this.allNoti);
+    });
+  }
+
+  markRead(id: string){
+    this.notiService.getidNoti(id).subscribe(data => {
+      this.notiData = data;
+      const postId = this.notiData.postId;
+      // console.log('postId naja ', postId);
+      const postName = this.notiData.postName;
+      const ownerName = this.notiData.ownerName;
+      const ownerId = this.notiData.ownerId;
+      const joinerName = this.notiData.joinerName;
+      const joinerId = this.notiData.joinerId;
+      const status = this.notiData.status;
+      const datetime = this.notiData.datetime;
+      const starttime = this.notiData.starttime;
+      const endtime = this.notiData.endtime;
+      const place = this.notiData.place;
+      const type = this.notiData.type;
+      const press = this.notiData.press;
+      const inject = this.notiData.inject;
+      const description = this.notiData.description;
+      const read = true;
+      this.notiService.markRead(id,
+        postId,
+        postName,
+        ownerName,
+        ownerId,
+        joinerName,
+        joinerId,
+        status,
+        datetime,
+        starttime,
+        endtime,
+        place,
+        type,
+        press,
+        inject,
+        description,
+        read);
     });
   }
 

@@ -49,9 +49,21 @@ export class JoinsService {
       console.log(res);
     });
   }
+  getJoinn(postId: string){
+    return this.http.get<{ response: any }>('http://localhost:3000/join/getJoinn/' + postId);
+  }
+
   leaveJoin(id: string) {
     console.log(id);
     this.http.delete('http://localhost:3000/join/leavejoin/' + id).subscribe(res => {
+      console.log(res);
+    });
+
+  }
+
+  deleteJoinPost(postId: string) {
+    console.log(postId);
+    this.http.delete('http://localhost:3000/join/deleteJoinPost/' + postId).subscribe(res => {
       console.log(res);
     });
 
@@ -97,4 +109,5 @@ export class JoinsService {
   getidJoin(id: string) {
     return this.http.get('http://localhost:3000/join/getidjoin/' + id);
   }
+
 }

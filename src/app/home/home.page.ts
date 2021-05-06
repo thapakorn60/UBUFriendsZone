@@ -70,6 +70,7 @@ export class HomePage implements OnInit {
   public isMenuOpen : boolean;
   public ishidden = false;
   total: any;
+  joinThisPost: { response: any; };
 
   constructor(public alertController: AlertController,
     private postsService: PostsService,
@@ -134,7 +135,13 @@ export class HomePage implements OnInit {
               const endtime = this.dataPost['endtime']
               const place = this.dataPost['place']
               const type = this.dataPost['type']
+              const press = 'request';
+              const inject = false;
+              const description = 'ขอเข้าร่วมอีเว้นท์';
+              const read = false;
               this.joinService.addJoin(postId, postName, ownerName, ownerId, joinerName, this.joinerId, this.status, datetime, starttime, endtime, place, type);
+              // tslint:disable-next-line:max-line-length
+              this.notiService.addNotification(postId, postName, ownerName, ownerId, joinerName, this.joinerId, this.status, datetime, starttime, endtime, place, type, press, inject, description, read);
               // this.onePost = data;
               // const name = this.onePost['name'];
               // const eventname = this.onePost['eventname'];
@@ -232,8 +239,9 @@ export class HomePage implements OnInit {
       });
     });
     this.notiService.getNotification().subscribe(data => {
-      this.total = data.response.length;
-      console.log('noti : ',this.total);
+      // this.total = data.response.length;
+      this.total = data.response.filter(res => res.read == false);
+      console.log('noti : ',this.total.length);
       
     })
     // this.userService.getUser().subscribe(result => {
@@ -367,7 +375,41 @@ export class HomePage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             console.log(id);
-            this.postService.deletePost(id);
+            // this.postService.deletePost(id);
+            this.joinService.getJoinn(id).subscribe(data => {
+              this.joinThisPost = data;
+              // console.log(this.joinThisPost);
+              for(let join in this.joinThisPost){
+                this.joinChecked = this.joinThisPost[join];
+
+                const postId = this.joinChecked.postId;
+                // console.log('postId naja ', postId);
+                const postName = this.joinChecked.postName;
+                const ownerName = this.joinChecked.ownerName;
+                const ownerId = this.joinChecked.ownerId;
+                const joinerName = this.joinChecked.joinerName;
+                const joinerId = this.joinChecked.joinerId;
+                const status = this.joinChecked.status;
+                const datetime = this.joinChecked.datetime;
+                const starttime = this.joinChecked.starttime;
+                const endtime = this.joinChecked.endtime;
+                const place = this.joinChecked.place;
+                const type = this.joinChecked.type;
+                const press = 'delete';
+                const inject = false;
+                const description = 'ยกเลิกกิจกรรม';
+                const read = false;
+                // console.log(this.joinChecked.joinerName);
+                // tslint:disable-next-line:max-line-length
+              this.notiService.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
+
+                
+              }
+              // this.joinService.deleteJoinPost(id);
+              // this.notiService.addNotification
+              
+            });
+            
           }
         }
       ]

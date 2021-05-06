@@ -65,6 +65,8 @@ export class JoinerEventPage implements OnInit {
               const endtime = this.dataJoin.endtime;
               const place = this.dataJoin.place;
               const type = this.dataJoin.type;
+              const press = '';
+              const inject = true;
               const description = 'อนุมัติแล้ว';
               const read = false;
 
@@ -100,7 +102,7 @@ export class JoinerEventPage implements OnInit {
                 type);
               // -------------------
               // tslint:disable-next-line:max-line-length
-              this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, description, read);
+              this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
           });
         }
         }
@@ -125,6 +127,30 @@ export class JoinerEventPage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             console.log(id);
+            this.joinService.getidJoin(id).subscribe(data => {
+              this.dataJoin = data;
+              console.log(this.dataJoin);
+              const postId = this.dataJoin.postId;
+              const postName = this.dataJoin.postName;
+              const ownerName = this.dataJoin.ownerName;
+              const ownerId = this.dataJoin.ownerId;
+              const joinerName = this.dataJoin.joinerName;
+              const joinerId = this.dataJoin.joinerId;
+              const status = true;
+              const datetime = this.dataJoin.datetime;
+              const starttime = this.dataJoin.starttime;
+              const endtime = this.dataJoin.endtime;
+              const place = this.dataJoin.place;
+              const type = this.dataJoin.type;
+              const press = 'reject';
+              const inject = false;
+              const description = 'คำขอถูกปฏิเสธ';
+              const read = false;
+
+              // tslint:disable-next-line:max-line-length
+              this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
+            });
+            this.joinService.leaveJoin(id);
           }
         }
       ]
@@ -148,6 +174,29 @@ export class JoinerEventPage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             console.log(id);
+            this.joinService.getidJoin(id).subscribe(data => {
+              this.dataJoin = data;
+              console.log(this.dataJoin);
+              const postId = this.dataJoin.postId;
+              const postName = this.dataJoin.postName;
+              const ownerName = this.dataJoin.ownerName;
+              const ownerId = this.dataJoin.ownerId;
+              const joinerName = this.dataJoin.joinerName;
+              const joinerId = this.dataJoin.joinerId;
+              const status = true;
+              const datetime = this.dataJoin.datetime;
+              const starttime = this.dataJoin.starttime;
+              const endtime = this.dataJoin.endtime;
+              const place = this.dataJoin.place;
+              const type = this.dataJoin.type;
+              const press = 'kick';
+              const inject = false;
+              const description = 'คุณถูกเตะจากอีเว้น';
+              const read = false;
+
+              // tslint:disable-next-line:max-line-length
+              this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
+            });
             this.joinService.leaveJoin(id);
           }
         }

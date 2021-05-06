@@ -10,89 +10,112 @@
 </ion-header>
 
 <ion-content color="dark">
-    <!-- <ion-tabs disabled="pageFlow.disableOtherTabs">
-        <ion-tab-bar slot="bottom">
-            <ion-tab-button>
-                <ion-icon name="albums" color="primary"></ion-icon>
-                All
-            </ion-tab-button>
 
-            <ion-tab-button href="notievents">
-                <ion-icon name="enter"></ion-icon>
-                Your events
-            </ion-tab-button>
-
-            <ion-tab-button href="notirequest">
-                <ion-icon name="notifications"></ion-icon>
-                Your requests
-            </ion-tab-button>
-
-        </ion-tab-bar>
-    </ion-tabs> -->
-    <!-- <ion-card>
-        <ion-item color="warning">
-
-            <ion-icon name="football-outline"></ion-icon>
-            &nbsp;&nbsp;&nbsp;
-            <ion-label>
-                <h1>กำลังจะเริ่ม</h1>
-                <h2>โดย : Akkaradet Puang </h2>
-                <h2>ที่ หนองอิเจมส์</h2>
-                <p>04/03/2021 06:30 ถึง 07:40</p>
-                <p>ออกกำลังกายยามเช้า</p>
-            </ion-label> -->
-
-    <!-- <div>
-                <ion-badge id="notifications-badge" color="danger">1</ion-badge>
-            </div> -->
-    <!-- 
-        </ion-item>
-
-    </ion-card> -->
-    <!-- <ion-card>
-        <ion-item color="danger">
-
-            <ion-icon name="football-outline"></ion-icon>
-            &nbsp;&nbsp;&nbsp;
-            <ion-label>
-                <h1>ยกเลิกกิจกรรม</h1>
-                <h2>โดย : Akkaradet Puang </h2>
-                <h2>ที่ หนองอิเจมส์</h2>
-                <p>04/03/2021 06:30 ถึง 07:40</p>
-                <p>ออกกำลังกายยามเช้า</p>
-            </ion-label> -->
-
-    <!-- <div>
-                <ion-badge id="notifications-badge" color="danger">1</ion-badge>
-            </div> -->
-
-    <!-- </ion-item>
-    </ion-card> -->
     <ion-card *ngFor="let noti of allNoti">
-        <ion-button size="small">
-            <ion-icon name="checkmark-outline"></ion-icon>mark read
-        </ion-button>
-        <ion-button color="danger" fill="clear" (click)="delete(noti._id)">
-            <ion-icon name="trash"></ion-icon>
-        </ion-button>
+        <ion-row>
+
+            <ion-button size="small" (click)="markRead(noti._id)" *ngIf="noti.read === false">
+                <!-- <ion-icon name="checkmark-outline"></ion-icon> -->
+                mark read
+            </ion-button>
+            <ion-button size="small" fill="clear" *ngIf="noti.read === true">
+                <ion-icon name="checkmark-outline"></ion-icon>read
+            </ion-button>
+
+            <ion-button size="small" color="danger" fill="clear" (click)="delete(noti._id)">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
+
+            <ion-button fill="clear" size="small">
+                <p>{{noti.createdAt | date: "dd/MM/yyyy HH:mm"}} น.</p>
+            </ion-button>
+
+        </ion-row>
+        <!-- <ion-row *ngIf="noti.read === true">
+
+            <ion-button size="small" fill="clear">
+                <ion-icon name="checkmark-outline"></ion-icon>read
+            </ion-button>
+            <ion-button size="small" color="danger" fill="clear" (click)="delete(noti._id)">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
+
+
+            <ion-button fill="clear" size="small">
+                <p>{{noti.createdAt | date: "dd/MM/yyyy HH:mm"}}</p>
+            </ion-button>
+
+        </ion-row> -->
         <ion-item>
 
-            <ion-icon name="fast-food-outline"></ion-icon>
+            <!-- <ion-icon name="fast-food-outline"></ion-icon> -->
             &nbsp;&nbsp;&nbsp;
             <ion-label>
-                <p>{{noti.postName}}</p>
-                <h2>{{noti.place}}</h2>
+                <h2>{{noti.postName}}</h2>
+                <!-- <p>{{noti.place}}</p> -->
+                <p>by {{noti.ownerName}}</p>
+                <p>
 
-                <p></p>
+
+                </p>
             </ion-label>
 
-            <div *ngIf="noti.status == true">
-                <ion-label>
-                    <p>
-                        <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon>{{noti.description}}
-                    </p>
-                    <p>by {{noti.ownerName}}</p>
-                </ion-label>
+            <div *ngIf="noti.inject == true">
+                <div>
+                    <ion-label color="success">
+                        <p>
+                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                            {{noti.description}}
+                        </p>
+                        <p>by {{noti.ownerName}}</p>
+                    </ion-label>
+                </div>
+            </div>
+            <div *ngIf="noti.inject == false">
+                <div *ngIf="noti.press == 'out'">
+                    <ion-label color="danger">
+                        <p>
+                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                            {{noti.joinerName}}</p>
+                        <p>{{noti.description}}
+                        </p>
+                    </ion-label>
+                </div>
+                <div *ngIf="noti.press == 'kick'">
+                    <ion-label color="warning">
+                        <p>
+                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                            {{noti.description}}
+                        </p>
+                        <p>by {{noti.ownerName}}</p>
+                    </ion-label>
+                </div>
+                <div *ngIf="noti.press == 'reject'">
+                    <ion-label color="danger">
+                        <p>
+                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                            {{noti.description}}
+                        </p>
+                        <p>by {{noti.ownerName}}</p>
+                    </ion-label>
+                </div>
+                <div *ngIf="noti.press == 'request'">
+                    <ion-label color="primary">
+                        <p>{{noti.joinerName}}</p>
+                        <p>
+                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                            {{noti.description}}
+                        </p>
+                    </ion-label>
+                </div>
+                <div *ngIf="noti.press == 'delete'">
+                    <ion-label color="danger">
+                        <p>{{noti.ownerName}}</p>
+                        <p>
+                            {{noti.description}}
+                        </p>
+                    </ion-label>
+                </div>
             </div>
             <!-- <div>
                 <p>
@@ -103,39 +126,7 @@
 
         </ion-item>
     </ion-card>
-    <!-- <ion-card>
 
-        <ion-item>
-            <ion-avatar>
-                <ion-img src="assets/images/iron.jpg"></ion-img>
-            </ion-avatar>
-            &nbsp;&nbsp;&nbsp;
-            <ion-label>
-                <h2>Ironman</h2>
-                <p>confirmed your request.</p>
-            </ion-label>
-            <div>
-                <p>14:00 น.</p>
-            </div>
-        </ion-item>
-    </ion-card> -->
-
-    <!-- <ion-card>
-
-        <ion-item>
-            <ion-avatar>
-                <ion-img src="assets/images/thanos.jfif"></ion-img>
-            </ion-avatar>
-            &nbsp;&nbsp;&nbsp;
-            <ion-label>
-                <h2>Thanos</h2>
-                <p>confirmed your request.</p>
-            </ion-label>
-            <div>
-                <p>11:00 น.</p>
-            </div>
-        </ion-item>
-    </ion-card> -->
 
 
 </ion-content>

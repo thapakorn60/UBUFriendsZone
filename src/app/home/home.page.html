@@ -70,7 +70,7 @@
                     <ion-col class="ion-align-self-center">
                         <ion-button href="notifications" color="dark" fill="clear" size="large">
                             <ion-icon expand="block" name="notifications"></ion-icon>
-                            <ion-badge id="notifications-badge" color="danger">{{total}}</ion-badge>
+                            <ion-badge id="notifications-badge" color="danger">{{total.length}}</ion-badge>
                         </ion-button>
                     </ion-col>
 
@@ -139,8 +139,9 @@
                             <ion-button color="dark" fill="clear" *ngIf="userId == listPost.userid" size="small" [routerLink]="['/editpost', listPost._id]">
                                 <ion-icon name="pencil-outline"></ion-icon>
                             </ion-button>
-                            <ion-button color="dark" fill="clear" *ngIf="userId == listPost.userid" size="small" (click)="deletePost(listPost._id)">
-                                <ion-icon name="trash-outline"></ion-icon>
+                            <ion-button color="danger" fill="clear" *ngIf="userId == listPost.userid" size="small" (click)="deletePost(listPost._id)">
+                                <!-- <ion-icon name="trash-outline"></ion-icon> -->
+                                ยกเลิกกิจกรรม
                             </ion-button>
                         </ion-row>
                     </ion-toolbar>

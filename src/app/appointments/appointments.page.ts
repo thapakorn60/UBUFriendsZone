@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { timeStamp } from 'console';
 import { JoinsService } from '../api/joins.service';
+import { NotificationsService } from '../api/notifications.service';
 import { PostsService } from '../api/posts.service';
+
 
 
 
@@ -17,10 +19,12 @@ export class AppointmentsPage implements OnInit{
   userId: string;
   allPost: any;
   myPost: any;
+  dataJoin: any;
 
   constructor(public alertController: AlertController,
               private joinService: JoinsService,
-              private postService: PostsService) {}
+              private postService: PostsService,
+              public notification: NotificationsService) {}
   ngOnInit() {
     this.joinService.getJoin().subscribe(result => {
       this.allJoin = result.response;
@@ -51,6 +55,29 @@ export class AppointmentsPage implements OnInit{
         {
           text: 'ตกลง',
           handler: () => {
+            this.joinService.getidJoin(id).subscribe(data => {
+              this.dataJoin = data;
+              console.log(this.dataJoin);
+              const postId = this.dataJoin.postId;
+              const postName = this.dataJoin.postName;
+              const ownerName = this.dataJoin.ownerName;
+              const ownerId = this.dataJoin.ownerId;
+              const joinerName = this.dataJoin.joinerName;
+              const joinerId = this.dataJoin.joinerId;
+              const status = true;
+              const datetime = this.dataJoin.datetime;
+              const starttime = this.dataJoin.starttime;
+              const endtime = this.dataJoin.endtime;
+              const place = this.dataJoin.place;
+              const type = this.dataJoin.type;
+              const press = 'out';
+              const inject = false;
+              const description = 'ออกจากกิจกรรม';
+              const read = false;
+
+              // tslint:disable-next-line:max-line-length
+              this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
+            });
             this.joinService.leaveJoin(id);
           }
         }
