@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
-import { timeStamp } from 'console';
+// import { timeStamp } from 'console';
 import { JoinsService } from '../api/joins.service';
 import { NotificationsService } from '../api/notifications.service';
 import { PostsService } from '../api/posts.service';

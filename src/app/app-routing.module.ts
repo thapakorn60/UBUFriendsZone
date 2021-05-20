@@ -92,6 +92,10 @@ const routes: Routes = [
     path: 'comments',
     loadChildren: () => import('./comments/comments.module').then( m => m.CommentsPageModule)
   },
+  {
+    path: 'eventdetail',
+    loadChildren: () => import('./event/eventdetail/eventdetail.module').then( m => m.EventdetailPageModule)
+  },
 ];
 
 @NgModule({

@@ -27,7 +27,7 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="floating">Event name(ชื่ออีเว้นท์)</ion-label>
+                    <ion-label position="floating">ชื่ออีเว้นท์</ion-label>
                     <ion-input [(ngModel)]="Post.eventname" name="eventname"></ion-input>
 
 
@@ -41,7 +41,7 @@
                     <ion-label>หมวดหมู่</ion-label>
                     <ion-select placeholder="เลือก" multiple="true" [(ngModel)]="Post.type" name="type">
                         <ion-select-option value="food">อาหาร</ion-select-option>
-                        <ion-select-option value="sport">กีฬา</ion-select-option>
+                        <ion-select-option value="sports">กีฬา</ion-select-option>
                         <ion-select-option value="media">บันเทิง</ion-select-option>
                         <ion-select-option value="edu">การศึกษา</ion-select-option>
                         <ion-select-option value="valun">กิจกรรม</ion-select-option>
@@ -53,17 +53,17 @@
                     <ion-label>วันที่ </ion-label>
                     <!-- <ion-input type="date" [(ngModel)]="Post.datetime" name="datetime" value="{{today | date: 'HH:mm dd/MM/yyyy'}}"></ion-input> -->
 
-                    <ion-datetime [(ngModel)]="Post.datetime" name="datetime" displayFormat="DD MMM YYYY" value="01 " min="2021" max="2025" placeholder="เลือกเวลา"></ion-datetime>
+                    <ion-datetime [(ngModel)]="Post.datetime" name="datetime" displayFormat="DD/MM/YYYY" value="01 " min="2021" max="2025" placeholder="เลือกเวลา"></ion-datetime>
                 </ion-item>
                 <ion-item>
                     <ion-row>
                         <ion-item>
                             <ion-label>เวลาเริ่ม</ion-label>
-                            <ion-datetime [(ngModel)]="Post.starttime" name="starttime" displayFormat="HH : mm" value="00 : 00" placeholder="เวลาเริ่ม"></ion-datetime>
+                            <ion-datetime [(ngModel)]="Post.starttime" name="starttime" displayFormat="HH:mm" value="00 : 00" placeholder="เวลาเริ่ม"></ion-datetime>
                         </ion-item>
                         <ion-item>
                             <ion-label>เวลาสิ้นสุด</ion-label>
-                            <ion-datetime [(ngModel)]="Post.endtime" name="endtime" displayFormat="HH : mm" value="00 : 00" placeholder="เวลาสิ้นสุด"></ion-datetime>
+                            <ion-datetime [(ngModel)]="Post.endtime" name="endtime" displayFormat="HH:mm" value="00 : 00" placeholder="เวลาสิ้นสุด"></ion-datetime>
                         </ion-item>
                     </ion-row>
                 </ion-item>
@@ -87,7 +87,7 @@
 
                 <ion-item>
                     <ion-label position="fixed">จำนวนคน</ion-label>
-                    <ion-input [(ngModel)]="Post.amount" name="amount" placeholder="ใส่จำนวนคน เช่น 4"></ion-input>
+                    <ion-input type="number" [(ngModel)]="Post.amount" name="amount" placeholder="ใส่จำนวนคน"></ion-input>
                 </ion-item>
 
             </ion-list>

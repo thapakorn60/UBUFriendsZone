@@ -21,13 +21,16 @@ export class UsersService {
   userId: string;
   userid: string;
 
-  constructor(private http: HttpClient,
+  constructor(public http: HttpClient,
               private iab: InAppBrowser) { }
   getallUser(){
     return this.http.get('http://localhost:3000/user/getuser');
   }
-    getuserDetail(){
+  getuserDetail(){
       // return this.http.post('http://localhost:3000/user/getuserDetail', email, password);
+  }
+  getidUser(id: string){
+    return this.http.get('http://localhost:3000/user/getidUser/' + id);
   }
   getUser(){
     this.userid = localStorage.getItem('id_user');

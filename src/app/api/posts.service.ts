@@ -33,7 +33,7 @@ export class PostsService {
     endtime: string,
     place: string,
     location: string,
-    amount: string
+    amount: number
   ){
     const postData = {
       name,
@@ -78,7 +78,7 @@ export class PostsService {
     endtime: string,
     place: string,
     location: string,
-    amount: string,
+    amount: number,
     // reqtojoin: []
   ) {
     this.logData = {
@@ -115,7 +115,7 @@ export class PostsService {
     endtime: string,
     place: string,
     location: object,
-    amount: string,
+    amount: number,
     reqtojoin: Array<any>,
     joinerId: string,
     status: boolean,

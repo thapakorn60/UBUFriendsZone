@@ -31,12 +31,13 @@
         <ion-footer>
             <ion-row>
                 <ion-col>
-                    <!-- <ion-button size="small" fill="outline">
-                        do something
-                    </ion-button> -->
+                    <ion-button size="small" expand="block" (click)="seeDetail(post._id)">
+                        <div>view</div>
+                        <ion-icon size="small" name="arrow-forward"></ion-icon>
+                    </ion-button>
                 </ion-col>
                 <ion-col>
-                    <ion-button size="small" fill="outline" color="warning" (click)="presentModal(post._id)">
+                    <ion-button size="small" fill="outline" color="warning" (click)="listJoiner(post._id)">
                         <ion-icon name="people"></ion-icon>&nbsp;
                         <p>show joiner</p>&nbsp;
                         <ion-icon name="arrow-forward"></ion-icon>

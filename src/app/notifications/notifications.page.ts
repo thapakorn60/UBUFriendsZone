@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NotificationsService } from '../api/notifications.service';
+
 import { HttpClient } from '@angular/common/http';
 import { NavController, NavParams, AlertController, ToastController } from '@ionic/angular';
+import { UsersService } from '../api/users.service';
 
 
 
@@ -13,11 +15,22 @@ import { NavController, NavParams, AlertController, ToastController } from '@ion
 export class NotificationsPage implements OnInit {
   allNoti: any;
   notiData: any;
+  iduser: string;
+  detail: any;
 
   constructor(public notiService: NotificationsService,
-              public alertController: AlertController) { }
+              public alertController: AlertController,
+              public userService: UsersService) { }
 
   ngOnInit() {
+    this.iduser = localStorage.getItem('id_user');
+    this.userService.getidUser(this.iduser).subscribe(result => {
+      this.detail = result;
+      // console.log(this.detail['lifestyle']);
+      // this.style = this.detail['lifestyle'];
+      // this.name = this.detail['name'];
+      // console.log('MyStyle: ', this.style);
+    });
     this.notiService.getNotification().subscribe(data => {
       this.allNoti = data.response;
       console.log(this.allNoti);

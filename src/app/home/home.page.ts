@@ -7,6 +7,7 @@ import { empty, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
 
+
 // import * as firebase from 'firebase';
 import '@firebase/auth';
 import { AuthenticateService } from '../services/authentication.service';
@@ -24,6 +25,14 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { UsersService } from '../api/users.service';
 import { JoinsService } from '../api/joins.service';
 import { NotificationsService } from '../api/notifications.service';
+import { HistoriesService } from '../api/histories.service';
+import { EventdetailPage } from '../event/eventdetail/eventdetail.page';
+// import { time } from 'console';
+import { PickerController } from "@ionic/angular";
+import { PickerOptions } from "@ionic/core";
+import { checkAvailability } from '@ionic-native/core';
+import { ProfileuserPage } from '../profileuser/profileuser.page';
+
 
 
 
@@ -55,6 +64,48 @@ export class HomePage implements OnInit {
   onePost: Object;
   joinerId: string;
   dataPost: Object;
+  type = [
+    { value: 'all', display: 'ทั้งหมด' },
+    { value: 'food', display: 'อาหาร' },
+    { value: 'sports', display: 'กีฬา' },
+    { value: 'media', display: 'บันเทิง' },
+    { value: 'edu', display: 'การศึกษา' },
+    { value: 'valun', display: 'กิจกรรม' },
+    { value: 'other', display: 'อื่นๆ' },
+  ]
+  numberTime = [
+    { value: 0, display: '00.00 น.' },
+    { value: 1, display: '01.00 น.' },
+    { value: 2, display: '02.00 น.' },
+    { value: 3, display: '03.00 น.' },
+    { value: 4, display: '04.00 น.' },
+    { value: 5, display: '05.00 น.' },
+    { value: 6, display: '06.00 น.' },
+    { value: 7, display: '07.00 น.' },
+    { value: 8, display: '08.00 น.' },
+    { value: 9, display: '09.00 น.' },
+    { value: 10, display: '10.00 น.' },
+    { value: 11, display: '11.00 น.' },
+    { value: 12, display: '12.00 น.' },
+    { value: 13, display: '13.00 น.' },
+    { value: 14, display: '14.00 น.' },
+    { value: 15, display: '15.00 น.' },
+    { value: 16, display: '16.00 น.' },
+    { value: 17, display: '17.00 น.' },
+    { value: 18, display: '18.00 น.' },
+    { value: 19, display: '19.00 น.' },
+    { value: 20, display: '20.00 น.' },
+    { value: 21, display: '21.00 น.' },
+    { value: 22, display: '22.00 น.' },
+    { value: 23, display: '23.00 น.' },
+    { value: 24, display: 'ก่อน 00.00 น.' },
+  ]
+
+  typecate: string;
+  datecate: string;
+  timeScate: number;
+  timeEcate: number;
+
 
   dataJoin: { response: any; };
   allJoin: any;
@@ -67,10 +118,19 @@ export class HomePage implements OnInit {
   thisJoin: any;
   joinChecked: any;
   item = [];
-  public isMenuOpen : boolean;
+  public isMenuOpen: boolean;
   public ishidden = false;
   total: any;
   joinThisPost: { response: any; };
+  notilength: any;
+  iduser: string;
+  modeEvent = '';
+  styleData: any;
+  name: any;
+  public unique: any[];
+  itemIntro = [];
+  myStyle: any[];
+  countJoin: any;
 
   constructor(public alertController: AlertController,
     private postsService: PostsService,
@@ -86,7 +146,9 @@ export class HomePage implements OnInit {
     private joinService: JoinsService,
     public modalController: ModalController,
     private render: Renderer2,
-    public notiService: NotificationsService) {
+    public notiService: NotificationsService,
+    public historyService: HistoriesService,
+    private changeRef: ChangeDetectorRef) {
 
     this.email_login = localStorage.getItem('data_user');
     this.http.get<{ messaeg: string, email: string, status: any }>(this.url + '/' + this.email_login).subscribe((res) => {
@@ -95,6 +157,14 @@ export class HomePage implements OnInit {
     })
   }
 
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
 
   async addtojoin(Post_id: string) {
     const alert = await this.alertController.create({
@@ -142,43 +212,9 @@ export class HomePage implements OnInit {
               this.joinService.addJoin(postId, postName, ownerName, ownerId, joinerName, this.joinerId, this.status, datetime, starttime, endtime, place, type);
               // tslint:disable-next-line:max-line-length
               this.notiService.addNotification(postId, postName, ownerName, ownerId, joinerName, this.joinerId, this.status, datetime, starttime, endtime, place, type, press, inject, description, read);
-              // this.onePost = data;
-              // const name = this.onePost['name'];
-              // const eventname = this.onePost['eventname'];
-              // const userid = this.onePost['userid'];
-              // const description = this.onePost['description'];
-              // const type = this.onePost['type'];
-              // const datetime = this.onePost['datetime'];
-              // const starttime = this.onePost['starttime'];
-              // const endtime = this.onePost['endtime'];
-              // const place = this.onePost['place'];
-              // const location = this.onePost['location'];
-              // const amount = this.onePost['amount'];
-              // const reqtojoin = this.onePost['reqtojoin'];
-              // this.joinerId = localStorage.getItem('id_user');
-              // this.status = false;
 
-              // var varPost= {
-              //   userid,
-              //   name,
-              //   eventname,
-              //   description,
-              //   type,
-              //   datetime,
-              //   starttime,
-              //   endtime,
-              //   place,
-              //   location,
-              //   amount,
-              //   reqtojoin
-              // }
-              // console.log(varPost);
-
-              // console.log("this is a " + userid);
-              // this.postService.tojoin(Post_id, name, eventname, userid, description, type, datetime,  
-              //  starttime, endtime, place, location, amount, reqtojoin, this.joinerId, this.status,);
             });
-            // this.buttonColor = 'danger';
+
             console.log()
           }
         }
@@ -225,8 +261,12 @@ export class HomePage implements OnInit {
   // --------------------------------------------------------------------------------------------------------
 
   // --------------------------------------------------------------------------------------------------------
-
   ngOnInit() {
+    this.typecate = 'all';
+    // this.modeEvent = 'normal'
+    this.timeScate = 0;
+    this.timeEcate = 24;
+
     this.userService.getUser().subscribe(user => {
       this.userId = user['_id'];
       console.log(this.userId);
@@ -240,124 +280,80 @@ export class HomePage implements OnInit {
     });
     this.notiService.getNotification().subscribe(data => {
       // this.total = data.response.length;
-      this.total = data.response.filter(res => res.read == false);
-      console.log('noti : ',this.total.length);
-      
-    })
-    // this.userService.getUser().subscribe(result => {
-    //   this.detail = result;
-    //   console.log(this.detail['lifestyle']);
-    //   this.style = this.detail['lifestyle'];
-    //   console.log(this.style.toString());
-    //   this.postService.getallPost().subscribe(data => {
-    //     this.allPost = data.response;
-    //     for(let i = 0; i < this.allPost.length; i++) {
-    //       // console.log(this.allPost[i]);
-    //       this.postData = this.allPost[i];
-    //     }
-    //   });
-    // });
-
-    this.postService.getallPost().subscribe(result => {
-
-      this.allPost = result.response;
-      console.log(this.allPost);
-      const iduser = localStorage.getItem('id_user');
-      this.join = true;
-      // this.notjoin = false;
-
-      
-      // for (let idd in this.allPost) {
-        // this.join = true;
-        // this.notjoin = false;
-        // this.postData = this.allPost[idd];
-        // const idpost = this.postData['_id'];
-        // console.log('postname: ', this.postData['eventname']);**************
-        // console.log('post id: ',this.postData['_id']);***************
-        // console.log('iduser: ',iduser);
-        this.statusJoin = false;
-        this.join = true;
-        // this.notjoin = false;
-        // console.log('*');
-        this.joinService.getJoin().subscribe(data => {
-          this.allJoin = data.response;
-          this.thisJoin = this.allJoin.filter(join => join.joinerId == iduser);
-          
-          // this.ishidden = false;
-          for(let i in this.thisJoin){
-            // this.joinChecked = this.thisJoin[i];
-            this.item.push(this.thisJoin[i]);
-          }
-          console.log(this.item);
-          // for (let j in this.allJoin) {
-            // this.statusJoin = Boolean;
-            console.log('-------------------------------------------');
-          });
-          // }
-            // ----------------------------------------------------------
-            // this.joinData = this.allJoin[j];
-            // const post_Id = this.joinData['postId'];
-            // const joiner_Id = this.joinData['joinerId'];
-            // --------------------------------------------------------------
-            // console.log("joinPost :",this.joinData['postId']);
-            // console.log("joinUser :",this.joinData['joinerId']);
-            
-            // if (idpost === post_Id && iduser === joiner_Id) {
-              // this.statusJoin = true;
-              // console.log('status: ',this.statusJoin);
-              
-              // console.log('status: อันนี้แหล่ะใช่เลย');  
-              // } else {
-                // this.statusJoin = false;             
-              // console.log('status: ไม่ใช่อันนี้'); 
-            // }
-            // console.log('*');
-          // }
-          // console.log(this.statusJoin);**********
-          // console.log(this.thisJoin.status);
-          
-          
-          // if (this.statusJoin == true) {
-            
-            // this.join = false;
-            // this.notjoin = true;
-            // console.log('โพสนี้ใช่');***********
-            
-            // } else {
-              // this.join = true;
-              // this.notjoin = false;
-              // console.log('โพสนี้ไม่ใช่');************
-              // }
-              // console.log(this.join);
-              // console.log(this.notjoin);
-              
-              // const statusJoinNaja = this.statusJoin;
-              // console.log(this.thisJoin);
-              // for(let j in this.thisJoin){
-              //   this.joinChecked = this.thisJoin[j]
-                // if(this.thisJoin == null){
-                //   console.log('null');
-                  
-                // }else if (this.thisJoin != null) {
-                // console.log(this.joinChecked.joinerId);
-                // }
-              // }
-            // }
-            
-            
-            
-
-
-      // -------------------------------------------------------------------------------------
-
+      this.total = data.response.filter(res => res.read == false &&( res.ownerId == this.iduser || res.joinerId == this.iduser));
+      this.notilength = this.total.length;
+      console.log('noti : ', this.notilength);
 
     });
+
+    this.iduser = localStorage.getItem('id_user');
+    this.userService.getidUser(this.iduser).subscribe(result => {
+      this.detail = result;
+      // console.log(this.detail['lifestyle']);
+      this.style = this.detail['lifestyle'];
+      this.name = this.detail['name'];
+      console.log('MyStyle: ', this.style);
+    });
+
+      this.postService.getallPost().subscribe(result => {
+        this.allPost = result.response;
+        this.modeEvent = 'normal'
+        const postId = this.allPost['_id'];
+        this.style.forEach(element => {
+          console.log(element);
+          this.postData = this.allPost.filter(post =>
+            post.type.includes(element)
+          );
+          this.postData.forEach(iData => {
+            this.item.push(iData);
+          });
+              console.log('cate : ', this.postData);
+        });
+        
+        this.unique = Array.from(new Set(this.item.map(a => a._id))).map(id => {
+          return this.item.find(a => a._id === id)
+        })
+        this.unique.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1);
+        console.log(this.myStyle);
+        const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+        this.itemIntro = findDuplicates(this.item);
+        console.log(this.itemIntro);
+        // console.log(this.modeEvent);
+
+        this.joinService.getJoin().subscribe(data => {
+          this.allJoin = data.response;
+          this.thisJoin = this.allJoin.filter(join => join.joinerId == this.iduser);
+          this.countJoin = this.allJoin.filter(join => join.status == true);
+          // console.log('myjoin : ', this.thisJoin);
+          // console.log('count ', this.countJoin.length);
+        });
+        
+      });
+     
+        //Called once, before the instance is destroyed.
+        //Add 'implements OnDestroy' to the class.
+        
+    
+    // ------------------------------------------------------------------------------------------------------
+    // this.postService.getallPost().subscribe(result => {
+    //   this.modeEvent = 'normal';
+
+    //   this.allPost = result.response;
+    //   console.log('allpost : ', this.allPost);
+    //   const iduser = localStorage.getItem('id_user');
+    //   this.join = true;
+    // check(id){
+    // this.postService.getidPost(id){}
+
+    // });
+    // }
   }
 
   openMenu() {
     this.menu.enable(true, 'custom');
     this.menu.open('custom');
   }
+
 
   async deletePost(id: string) {
     const alert = await this.alertController.create({
@@ -375,11 +371,10 @@ export class HomePage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             console.log(id);
-            // this.postService.deletePost(id);
             this.joinService.getJoinn(id).subscribe(data => {
               this.joinThisPost = data;
               // console.log(this.joinThisPost);
-              for(let join in this.joinThisPost){
+              for (let join in this.joinThisPost) {
                 this.joinChecked = this.joinThisPost[join];
 
                 const postId = this.joinChecked.postId;
@@ -401,15 +396,16 @@ export class HomePage implements OnInit {
                 const read = false;
                 // console.log(this.joinChecked.joinerName);
                 // tslint:disable-next-line:max-line-length
-              this.notiService.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
+                this.notiService.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
+                // this.historyService.addHistory(postId, postName, ownerName, ownerId, joinerName, joinerId, datetime, starttime, endtime, place, type);
 
-                
               }
+              this.postService.deletePost(id);
               // this.joinService.deleteJoinPost(id);
               // this.notiService.addNotification
-              
+
             });
-            
+
           }
         }
       ]
@@ -423,6 +419,7 @@ export class HomePage implements OnInit {
     await this.authService.logout();
     localStorage.removeItem('data_user')
     this.router.navigateByUrl('login');
+    window.location.reload();
   }
 
   // -----------------------------test function--------------------------------------------
@@ -443,7 +440,7 @@ export class HomePage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             console.log('confirm');
-              this.join = false;
+            this.join = false;
             this.notjoin = true;
             console.log(this.join);
             console.log(this.notjoin);
@@ -457,7 +454,7 @@ export class HomePage implements OnInit {
   }
 
 
-  async notJoin(Post_id: string) {
+  async notJoin(Post_id: string, id: string) {
     const alert = await this.alertController.create({
       header: 'ยกเลิกเข้าร่วมอีเว้นท์',
       message: 'คุณต้องการที่จะยกเลิกการเข้าร่วมอีเว้นท์',
@@ -473,18 +470,18 @@ export class HomePage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             console.log('confirm');
-              this.join = true;
-            this.notjoin = false;
-            console.log(this.join);
-            console.log(this.notjoin);
-            this.isMenuOpen = !this.isMenuOpen;
+            //   this.join = true;
+            // this.notjoin = false;
+            // console.log(this.join);
+            // console.log(this.notjoin);
+            // this.isMenuOpen = !this.isMenuOpen;
 
-            
+
             // this.postService.getidPost(Post_id).subscribe(data => {
             //   this.dataPost = data;
             //   const postId = this.dataPost['_id'];
             //   const joinerId = localStorage.getItem('id_user');
-            //   this.joinService.leaveJoin(Post_id);
+            this.joinService.leaveJoin(id);
 
             // });
             // this.joinService.getJoin().subscribe(data => {
@@ -502,7 +499,7 @@ export class HomePage implements OnInit {
     await alert.present();
   }
 
-  async presentModal(name: string, id: string , uid: string) {
+  async gotoComment(name: string, id: string, uid: string) {
     // console.log(id);
     const modal = await this.modalController.create({
       component: CommentsPage,
@@ -515,25 +512,158 @@ export class HomePage implements OnInit {
     });
     return await modal.present();
   }
-  public onShow(controlToShow) {
-    // this.ishidden = false;
-    // if(this.ishidden == false){
-    //   this.ishidden = true;
-    this.render.setStyle(controlToShow, 'visibility', 'visible');
-    // }else{
-    //   this.ishidden = false;
-    //       this.render.setStyle(controlToShowandHide, 'visibility', 'hidden');
-          
-    //     }
 
-    // this.joinChecked = this.render.setStyle(controlToShowandHide, 'visibility', 'hidden');
-    // this.joinChecked != this.joinChecked;
+  async profileUser(id: string){
+    const modal  = await this.modalController.create({
+      component: ProfileuserPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        userid: id,
+      }
+    });
+    return await modal.present();
   }
-  public onHide(controlToHide) {
-    this.render.setStyle(controlToHide, 'visibility', 'hidden');
+
+  async seeDetail(id: string, name: string) {
+    // console.log(id);
+    const modal = await this.modalController.create({
+      component: EventdetailPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        postId: id,
+        eventname: name
+      }
+    });
+    return await modal.present();
+  }
+  refresh(){
+        window.location.reload();
+  }
+
+  getFilter() {
+    this.unique = [];
+    this.item = [];
+    this.postService.getallPost().subscribe(data => {
+      // if (this.typecate == 'all') {
+
+      if (this.typecate == 'all' && this.datecate == null) {
+        this.allPost = data.response;
+        // -----------------------------------------------------------------------
+        this.unique = this.allPost.filter(post => {
+          const timeS = new Date(post.starttime)
+          const timeE = new Date(post.endtime)
+
+          return timeS.getHours() >= this.timeScate && timeE.getHours() <= this.timeEcate;
+        });
+        console.log(this.unique);
+        console.log(this.modeEvent);
+        this.modeEvent = 'cate'
+
+      } else if (this.typecate != 'all' && this.datecate == null) {
+
+        this.typecate.forEach(element => {
+          this.postData = this.allPost.filter(post => {
+          console.log(element);
+            const timeS = new Date(post.starttime)
+            const timeE = new Date(post.endtime)
+
+            return post.type.includes(element) && timeS.getHours() >= this.timeScate && timeE.getHours() <= this.timeEcate;
+          });
+          this.postData.forEach(iData => {
+            this.item.push(iData);
+          });
+          //     console.log('cate : ', this.postData);
+        });
+
+        this.unique = Array.from(new Set(this.item.map(a => a._id))).map(id => {
+          return this.item.find(a => a._id === id)
+        })
+        this.unique.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1);
+        //   console.log(this.unique);
+        const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+        this.itemIntro = findDuplicates(this.item);
+        console.log('this : ',this.item);
+        
+        console.log('แนะนำ',this.itemIntro);
+          console.log(this.modeEvent);
+          this.modeEvent = 'cate'
+        // --------------------------------------------------------------------------------
+        // console.log('Intro: ',this.item);
+      }
+      else if (this.typecate != 'all' && this.datecate != null) {
+        this.typecate.forEach(element => {
+          console.log(element);
+          this.postData = this.allPost.filter(post => {
+            const time = new Date(post.datetime)
+            const timec = new Date(this.datecate)
+            const timeS = new Date(post.starttime)
+            // const timeStart = new Date(this.timeScate)
+            const timeE = new Date(post.endtime)
+            // const timeEnd = new Date(this.timeEcate)
+            //  return time.getTime() >= timec.getTime();
+
+            return post.type.includes(element) && time.getTime() >= timec.getTime() && timeS.getHours() >= this.timeScate && timeE.getHours() <= this.timeEcate;
+            // console.log(timeS.getHours(), timeE.getHours(),'999 ', this.timeScate , this.timeEcate);
+          }
+          )
+          this.postData.forEach(iData => {
+            this.item.push(iData);
+          })
+          console.log('cate : ', this.postData);
+        });
+
+        this.unique = Array.from(new Set(this.item.map(a => a._id))).map(id => {
+          return this.item.find(a => a._id === id)
+        })
+        this.unique.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1);
+        console.log(this.unique);
+        const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+        this.itemIntro = findDuplicates(this.item);
+        console.log(this.modeEvent);
+        this.modeEvent = 'cate'
+      }
+      else if (this.typecate == 'all' && this.datecate != null) {
+
+        this.postData = this.allPost.filter(post => {
+          const time = new Date(post.datetime)
+          const timec = new Date(this.datecate)
+          const timeS = new Date(post.starttime)
+          const timeE = new Date(post.endtime)
+          return time.getTime() >= timec.getTime() && timeS.getHours() >= this.timeScate && timeE.getHours() <= this.timeEcate;
+        }
+        )
+        this.postData.forEach(iData => {
+          this.item.push(iData);
+        })
+        console.log('cate : ', this.postData);
+
+
+        this.unique = Array.from(new Set(this.item.map(a => a._id))).map(id => {
+          return this.item.find(a => a._id === id)
+        })
+        this.unique.sort((a, b) => a.createdAt > b.createdAt ? -1 : 1);
+        console.log(this.unique);
+        const findDuplicates = arr => arr.filter((item, index) => arr.indexOf(item) !== index)
+        this.itemIntro = findDuplicates(this.item);
+        console.log(this.modeEvent);
+      }
+          this.changeRef.detectChanges();
+
+    });
+    console.log(this.typecate);
+    // console.log(this.typecate.toString());
+
+    // console.log(this.typecate.length);
+
+    console.log(this.datecate);
+    console.log(this.timeScate);
+    console.log(this.timeEcate);
+    // this.modeEvent = 'cate'
+    // window.location.reload();
+    // this.changeRef.detectChanges();
+
   }
 
 
 }
-
 

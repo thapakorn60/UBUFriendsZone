@@ -10,6 +10,9 @@
 </ion-header>
 
 <ion-content color="dark" *ngIf="(ownerId == userId || userid == userId) || (joinerId == userId && status == true)">
+    <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
     <div *ngFor="let data of thisComment">
         <ion-item *ngIf="data.ownerId != userId && data.postId == postId" color="#6f6f6f">
             <!-- <ion-item *ngIf="data.ownerId != userId && data.postId == postId && (ownerId == userId || userid == userId) || (joinerId == userId && status == true)"> -->

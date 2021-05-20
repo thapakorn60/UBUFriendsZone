@@ -41,7 +41,7 @@ export class PostPage implements OnInit {
     endtime: '',
     place: '',
     location: '',
-    amount: '',
+    amount: 0,
     // reqtojoin:[]
   };
 

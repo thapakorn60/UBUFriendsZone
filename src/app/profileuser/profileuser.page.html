@@ -1,6 +1,12 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title color="light">Thanos</ion-title>
+        <ion-row>
+            <ion-button fill="clear" color="warning" (click)="dismiss()">
+                <ion-icon name="arrow-back-outline"></ion-icon>
+            </ion-button>
+
+            <ion-title color="warning">UserProfile</ion-title>
+        </ion-row>
     </ion-toolbar>
 </ion-header>
 
@@ -13,9 +19,9 @@
         </ion-avatar>
         &nbsp;&nbsp;&nbsp;
         <ion-label>
-            <h1>Thanos</h1>
-            <h2>อายุ: 124</h2>
-            <h2>เพศ: ชาย</h2>
+            <h1>{{name}}</h1>
+            <h2>อายุ: {{age}}</h2>
+            <h2>เพศ: {{sex}}</h2>
         </ion-label>
     </ion-item>
 
@@ -24,41 +30,41 @@
         <ion-item>
             <ion-icon name="mail-outline" size="small"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>อีเมลล์: thanos.sa.00@ubu.ac.th</ion-label>
+            <ion-label>อีเมลล์: {{email}}</ion-label>
         </ion-item>
 
         <ion-item>
             <ion-icon name="school-outline" size="small"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>การศึกษา: จบการศึกษา</ion-label>
+            <ion-label>การศึกษา: {{educational}}</ion-label>
         </ion-item>
 
         <ion-item>
             <ion-icon name="library-outline" size="small"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>คณะ: วิทยาศาสตร์</ion-label>
+            <ion-label>คณะ: {{faculty}}</ion-label>
         </ion-item>
 
         <ion-item>
             <ion-icon name="layers-outline" size="small"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>ชั้นปี: จบการศึกษา</ion-label>
+            <ion-label>ชั้นปี: {{year}}</ion-label>
         </ion-item>
 
         <ion-item>
             <ion-icon name="logo-facebook" size="small"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>Facebook: </ion-label>
+            <ion-label>Facebook: {{facebook}}</ion-label>
         </ion-item>
 
         <ion-item>
             <ion-icon name="logo-instagram" size="small"></ion-icon>
             &nbsp;&nbsp;
-            <ion-label>Instagram: </ion-label>
+            <ion-label>Instagram: {{instagram}}</ion-label>
         </ion-item>
 
         <ion-item>
-            <ion-label>อื่นๆ: </ion-label>
+            <ion-label>อื่นๆ: {{other}}</ion-label>
         </ion-item>
     </ion-list>
 

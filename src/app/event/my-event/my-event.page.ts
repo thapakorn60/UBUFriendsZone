@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { JoinsService } from 'src/app/api/joins.service';
 import { PostsService } from 'src/app/api/posts.service';
+import { EventdetailPage } from '../eventdetail/eventdetail.page';
 import { JoinerEventPage } from '../joiner-event/joiner-event.page';
 
 @Component({
@@ -76,7 +77,19 @@ export class MyEventPage implements OnInit {
     });
   }
 
-  async presentModal(id: string) {
+  async seeDetail(id: string) {
+    // console.log(id);
+    const modal = await this.modalController.create({
+      component: EventdetailPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        postId: id,
+      }
+    });
+    return await modal.present();
+  }
+
+  async listJoiner(id: string) {
     // console.log(id);
     const modal = await this.modalController.create({
       component: JoinerEventPage,

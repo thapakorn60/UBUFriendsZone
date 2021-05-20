@@ -11,121 +11,93 @@
 
 <ion-content color="dark">
 
-    <ion-card *ngFor="let noti of allNoti">
-        <ion-row>
+    <div *ngFor="let noti of allNoti">
+        <ion-card *ngIf="noti.ownerId == iduser || noti.joinerId == iduser">
+            <ion-row>
+                <ion-button size="small" (click)="markRead(noti._id)" *ngIf="noti.read === false">
+                    mark read
+                </ion-button>
+                <ion-button size="small" fill="clear" *ngIf="noti.read === true">
+                    <ion-icon name="checkmark-outline"></ion-icon>read
+                </ion-button>
 
-            <ion-button size="small" (click)="markRead(noti._id)" *ngIf="noti.read === false">
-                <!-- <ion-icon name="checkmark-outline"></ion-icon> -->
-                mark read
-            </ion-button>
-            <ion-button size="small" fill="clear" *ngIf="noti.read === true">
-                <ion-icon name="checkmark-outline"></ion-icon>read
-            </ion-button>
+                <ion-button size="small" color="danger" fill="clear" (click)="delete(noti._id)">
+                    <ion-icon name="trash"></ion-icon>
+                </ion-button>
 
-            <ion-button size="small" color="danger" fill="clear" (click)="delete(noti._id)">
-                <ion-icon name="trash"></ion-icon>
-            </ion-button>
+                <ion-button fill="clear" size="small">
+                    <p>{{noti.createdAt | date: "dd/MM/yyyy HH:mm"}} น.</p>
+                </ion-button>
 
-            <ion-button fill="clear" size="small">
-                <p>{{noti.createdAt | date: "dd/MM/yyyy HH:mm"}} น.</p>
-            </ion-button>
-
-        </ion-row>
-        <!-- <ion-row *ngIf="noti.read === true">
-
-            <ion-button size="small" fill="clear">
-                <ion-icon name="checkmark-outline"></ion-icon>read
-            </ion-button>
-            <ion-button size="small" color="danger" fill="clear" (click)="delete(noti._id)">
-                <ion-icon name="trash"></ion-icon>
-            </ion-button>
-
-
-            <ion-button fill="clear" size="small">
-                <p>{{noti.createdAt | date: "dd/MM/yyyy HH:mm"}}</p>
-            </ion-button>
-
-        </ion-row> -->
-        <ion-item>
-
-            <!-- <ion-icon name="fast-food-outline"></ion-icon> -->
-            &nbsp;&nbsp;&nbsp;
-            <ion-label>
-                <h2>{{noti.postName}}</h2>
-                <!-- <p>{{noti.place}}</p> -->
-                <p>by {{noti.ownerName}}</p>
-                <p>
-
-
-                </p>
-            </ion-label>
-
-            <div *ngIf="noti.inject == true">
-                <div>
-                    <ion-label color="success">
-                        <p>
-                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
-                            {{noti.description}}
-                        </p>
-                        <p>by {{noti.ownerName}}</p>
-                    </ion-label>
+            </ion-row>
+            <ion-item>
+                &nbsp;&nbsp;&nbsp;
+                <ion-label>
+                    <h2>{{noti.postName}}</h2>
+                    <!-- <p>{{noti.place}}</p> -->
+                    <p>by {{noti.ownerName}}</p>
+                    <p>
+                    </p>
+                </ion-label>
+                <div *ngIf="noti.inject == true">
+                    <div>
+                        <ion-label color="success">
+                            <p>
+                                {{noti.description}}
+                            </p>
+                            <p>by {{noti.ownerName}}</p>
+                        </ion-label>
+                    </div>
                 </div>
-            </div>
-            <div *ngIf="noti.inject == false">
-                <div *ngIf="noti.press == 'out'">
-                    <ion-label color="danger">
-                        <p>
-                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
-                            {{noti.joinerName}}</p>
-                        <p>{{noti.description}}
-                        </p>
-                    </ion-label>
+                <div *ngIf="noti.inject == false">
+                    <div *ngIf="noti.press == 'out'">
+                        <ion-label color="danger">
+                            <p>
+                                <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                                {{noti.joinerName}}</p>
+                            <p>{{noti.description}}
+                            </p>
+                        </ion-label>
+                    </div>
+                    <div *ngIf="noti.press == 'kick'">
+                        <ion-label color="warning">
+                            <p>
+                                <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                                {{noti.description}}
+                            </p>
+                            <p>by {{noti.ownerName}}</p>
+                        </ion-label>
+                    </div>
+                    <div *ngIf="noti.press == 'reject'">
+                        <ion-label color="danger">
+                            <p>
+                                <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                                {{noti.description}}
+                            </p>
+                            <p>by {{noti.ownerName}}</p>
+                        </ion-label>
+                    </div>
+                    <div *ngIf="noti.press == 'request'">
+                        <ion-label color="primary">
+                            <p>{{noti.joinerName}}</p>
+                            <p>
+                                <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
+                                {{noti.description}}
+                            </p>
+                        </ion-label>
+                    </div>
+                    <div *ngIf="noti.press == 'delete'">
+                        <ion-label color="danger">
+                            <p>{{noti.ownerName}}</p>
+                            <p>
+                                {{noti.description}}
+                            </p>
+                        </ion-label>
+                    </div>
                 </div>
-                <div *ngIf="noti.press == 'kick'">
-                    <ion-label color="warning">
-                        <p>
-                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
-                            {{noti.description}}
-                        </p>
-                        <p>by {{noti.ownerName}}</p>
-                    </ion-label>
-                </div>
-                <div *ngIf="noti.press == 'reject'">
-                    <ion-label color="danger">
-                        <p>
-                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
-                            {{noti.description}}
-                        </p>
-                        <p>by {{noti.ownerName}}</p>
-                    </ion-label>
-                </div>
-                <div *ngIf="noti.press == 'request'">
-                    <ion-label color="primary">
-                        <p>{{noti.joinerName}}</p>
-                        <p>
-                            <!-- <ion-icon name="checkmark-sharp" color="success" size="large"></ion-icon> -->
-                            {{noti.description}}
-                        </p>
-                    </ion-label>
-                </div>
-                <div *ngIf="noti.press == 'delete'">
-                    <ion-label color="danger">
-                        <p>{{noti.ownerName}}</p>
-                        <p>
-                            {{noti.description}}
-                        </p>
-                    </ion-label>
-                </div>
-            </div>
-            <!-- <div>
-                <p>
-                    <ion-icon name="close-sharp"></ion-icon>วร้ายโดนปฏิเสธ
-                </p>
-            </div> -->
-            <!-- <ion-badge id="notifications-badge" color="danger">1</ion-badge> -->
-
-        </ion-item>
-    </ion-card>
+            </ion-item>
+        </ion-card>
+    </div>
 
 
 

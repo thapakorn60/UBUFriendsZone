@@ -134,6 +134,16 @@ export class CommentsPage implements OnInit {
     });
     await alert.present();
   }
+  doRefresh(event) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      console.log('Async operation has ended');
+      event.target.complete();
+    }, 2000);
+  }
+
+
   dismiss() {
     // using the injected ModalController this page
     // can "dismiss" itself and optionally pass back data

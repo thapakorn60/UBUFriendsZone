@@ -16,12 +16,27 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
-export class ProfilePage implements OnInit, OnDestroy {
+export class ProfilePage implements OnInit {
   // user: Subscription;
-  email_login = "";
+  // tslint:disable-next-line:variable-name
+  email_login = '';
+  // tslint:disable-next-line:variable-name
   data_user_login = {};
   url = 'http://localhost:3000/user/getuserDetail';
   public userProfile: UserProfile;
+  myId: string;
+  myData: any;
+  name: string;
+  email: string;
+  age: string;
+  sex: string;
+  educational: string;
+  faculty: string;
+  year: string;
+  facebook: string;
+  instagram: string;
+  other: string;
+  lifestyle: any;
   constructor(private usersService: UsersService,
               private router: Router,
               private route: ActivatedRoute,
@@ -37,6 +52,21 @@ export class ProfilePage implements OnInit, OnDestroy {
               }
 
   ngOnInit() {
+    this.myId = localStorage.getItem('id_user');
+    this.usersService.getidUser(this.myId).subscribe(data => {
+      this.myData = data;
+      this.name = this.myData.name;
+      this.email = this.myData.email;
+      this.lifestyle = this.myData.lifestyle;
+      this.age = this.myData.age;
+      this.sex = this.myData.sex;
+      this.educational = this.myData.educational;
+      this.faculty = this.myData.faculty;
+      this.year = this.myData.year;
+      this.facebook = this.myData.facebook;
+      this.instagram = this.myData.instagram;
+      this.other = this.myData.other;
+    });
     // this.usersService.getUser().subscribe(data => {
     //   console.log(data);
     // });
@@ -49,9 +79,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       });
     });
   }
-  ngOnDestroy() {
+  // ngOnDestroy() {
     // this.user.unsubscribe();
-  }
+  // }
   async updateName(): Promise<void> {
     const alert = await this.alertCtrl.create({
       subHeader: 'Your name',

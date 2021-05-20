@@ -57,3 +57,19 @@ ion-badge {
 // ion-toolbar {
 //     --ion-background-color: #ffff00;
 // }
+.ribbon-holder {
+    overflow: hidden;
+    // background: tomato;
+    // height: 400px;
+}
+
+.ribbon {
+    position: absolute;
+    background: black;
+    color: white;
+    transform: rotate(-45deg);
+    text-align: center;
+    top: 10px;
+    left: -75px;
+    width: 200px;
+}

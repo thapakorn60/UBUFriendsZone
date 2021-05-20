@@ -1,7 +1,9 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AlertController, IonSlides, ModalController } from '@ionic/angular';
+import { HistoriesService } from 'src/app/api/histories.service';
 import { JoinsService } from 'src/app/api/joins.service';
 import { NotificationsService } from 'src/app/api/notifications.service';
+
 
 
 @Component({
@@ -22,7 +24,8 @@ export class JoinerEventPage implements OnInit {
   constructor(public modalCtrl: ModalController,
               public joinService: JoinsService,
               public alertController: AlertController,
-              public notification: NotificationsService) { }
+              public notification: NotificationsService,
+              public historyService: HistoriesService) { }
 
   ngOnInit() {
     console.log('id : ', this.postId);
@@ -103,7 +106,10 @@ export class JoinerEventPage implements OnInit {
               // -------------------
               // tslint:disable-next-line:max-line-length
               this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
-          });
+              // tslint:disable-next-line:max-line-length
+              this.historyService.addHistory(postId, postName, ownerName, ownerId, joinerName, joinerId, datetime, starttime, endtime, place, type);
+
+            });
         }
         }
       ]
@@ -215,8 +221,6 @@ moveToPrev(slides){
 }
 
   dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
     this.modalCtrl.dismiss();
   }
 }

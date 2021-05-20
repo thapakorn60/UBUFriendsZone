@@ -10,39 +10,37 @@
 </ion-header>
 
 <ion-content color="dark">
-    <ion-card>
+    <ion-card *ngFor="let hi of history">
+        <!-- <ion-header>
+            <ion-toolbar>
+                <ion-label>
+                    <h2>Eventname</h2>
+                </ion-label>
+            </ion-toolbar>
+        </ion-header> -->
+        <!-- <ion-card-content> -->
         <ion-item>
-            <ion-icon name="fast-food-outline"></ion-icon>
+            <ion-icon name="time"></ion-icon>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <ion-label>
-                <h2>THOR</h2>
-                <h2>ร้านลุงตัน</h2>
-                <p>10/12/2020 12:30</p>
+                <p>{{hi.postName}}</p>
+                <p>by {{hi.ownerName}}</p>
+                <p>place {{hi.place}}</p>
+                <!-- <p>{{dateNow | date: "dd/MM/yyyy" }}</p> -->
+                <p>{{hi.datetime|date:"dd/MM/yyyy HH:mm"}}</p>
             </ion-label>
-            <div>
+            <!-- <div>
                 <ion-avatar slot="start">
                     <ion-img src="assets/images/thor.jpg"></ion-img>
                 </ion-avatar>
-            </div>
+            </div> -->
+            <ion-button fill="clear" color="danger">
+                <ion-icon name="trash"></ion-icon>
+            </ion-button>
         </ion-item>
+        <!-- </ion-card-content> -->
     </ion-card>
-    <ion-card>
 
-        <ion-item>
-            <ion-icon name="library-outline"></ion-icon>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <ion-label>
-                <h2>Ironman</h2>
-                <h2>Stark Tower</h2>
-                <p>3/1/2021 12:30</p>
-            </ion-label>
-            <div>
-                <ion-avatar slot="start">
-                    <ion-img src="assets/images/iron.jpg"></ion-img>
-                </ion-avatar>
-            </div>
-        </ion-item>
-    </ion-card>
 
 
 </ion-content>
