@@ -9,18 +9,18 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'home',
-    loadChildren: () =>
-      import('./home/home.module').then(m => m.HomePageModule),
-    canActivate: [AuthGuard]
-  },
-  {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./home/home.module').then(m => m.HomePageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'profile',
@@ -95,6 +95,10 @@ const routes: Routes = [
   {
     path: 'eventdetail',
     loadChildren: () => import('./event/eventdetail/eventdetail.module').then( m => m.EventdetailPageModule)
+  },
+  {
+    path: 'myrequest',
+    loadChildren: () => import('./myrequest/myrequest.module').then( m => m.MyrequestPageModule)
   },
 ];
 

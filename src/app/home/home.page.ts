@@ -32,6 +32,7 @@ import { PickerController } from "@ionic/angular";
 import { PickerOptions } from "@ionic/core";
 import { checkAvailability } from '@ionic-native/core';
 import { ProfileuserPage } from '../profileuser/profileuser.page';
+import { MyrequestPage } from '../myrequest/myrequest.page';
 
 
 
@@ -105,6 +106,9 @@ export class HomePage implements OnInit {
   datecate: string;
   timeScate: number;
   timeEcate: number;
+
+  private authStatusSub: Subscription;
+  isLoading = false;
 
 
   dataJoin: { response: any; };
@@ -262,6 +266,11 @@ export class HomePage implements OnInit {
 
   // --------------------------------------------------------------------------------------------------------
   ngOnInit() {
+    this.authStatusSub = this.userService
+    .getAuthStatusListener()
+    .subscribe((authStatus) => {
+      this.isLoading = false;
+    });
     this.typecate = 'all';
     // this.modeEvent = 'normal'
     this.timeScate = 0;
@@ -417,9 +426,11 @@ export class HomePage implements OnInit {
   // }
   async logOut(): Promise<void> {
     await this.authService.logout();
+    this.userService.logout();
     localStorage.removeItem('data_user')
     this.router.navigateByUrl('login');
     window.location.reload();
+    this.router.navigate(['/login']);
   }
 
   // -----------------------------test function--------------------------------------------
@@ -508,6 +519,16 @@ export class HomePage implements OnInit {
         eventname: name,
         postId: id,
         userid: uid
+      }
+    });
+    return await modal.present();
+  }
+  async seeMyrequest(id: string){
+    const modal = await this.modalController.create({
+      component: MyrequestPage,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        myId: id
       }
     });
     return await modal.present();

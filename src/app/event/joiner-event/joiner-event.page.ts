@@ -3,6 +3,9 @@ import { AlertController, IonSlides, ModalController } from '@ionic/angular';
 import { HistoriesService } from 'src/app/api/histories.service';
 import { JoinsService } from 'src/app/api/joins.service';
 import { NotificationsService } from 'src/app/api/notifications.service';
+import { ProfileuserPage } from 'src/app/profileuser/profileuser.page';
+
+
 
 
 
@@ -115,6 +118,16 @@ export class JoinerEventPage implements OnInit {
       ]
     });
     await alert2.present();
+}
+async profileUser(id: string){
+  const modal  = await this.modalCtrl.create({
+    component: ProfileuserPage,
+    cssClass: 'my-custom-class',
+    componentProps: {
+      userid: id,
+    }
+  });
+  return await modal.present();
 }
 
   async reject(id: string) {

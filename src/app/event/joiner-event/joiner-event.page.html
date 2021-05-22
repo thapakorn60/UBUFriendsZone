@@ -39,6 +39,10 @@
                                     <ion-label>
                                         <h2>{{user.joinerName}}</h2>
                                         <ion-card-subtitle>wants to join your event</ion-card-subtitle>
+                                        <ion-button fill="outline" size="small" color="dark" (click)="profileUser(user.joinerId)">
+                                            <ion-icon name="search"></ion-icon>
+                                            <ion-icon name="person"></ion-icon>
+                                        </ion-button>
                                     </ion-label>
                                 </ion-item>
                             </ion-list>

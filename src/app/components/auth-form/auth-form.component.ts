@@ -2,6 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { UserCredential } from 'src/app/models/user';
 import { LoadingController, AlertController } from '@ionic/angular';
+import { UsersService } from 'src/app/api/users.service';
+
 
 @Component({
   selector: 'app-auth-form',
@@ -18,7 +20,8 @@ export class AuthFormComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private loadingCtrl: LoadingController,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    public userService: UsersService
   ) {
     this.authForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],

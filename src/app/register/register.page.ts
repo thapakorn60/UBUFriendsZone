@@ -14,8 +14,7 @@ export class RegisterPage implements OnInit {
   person = {
     email: '',
     password: '',
-    cpassword: '',
-    img: '',
+    // cpassword: '',
     name: '',
     tel: '',
     age: '',
@@ -26,29 +25,30 @@ export class RegisterPage implements OnInit {
     year: '',
     facebook: '',
     instagram: '',
-    other: ''
+    other: '',
+    img: ''
   };
   constructor(private usersService: UsersService) { }
   ngOnInit() {
   }
   register() {
-    // this.usersService.addUser(
-      // this.person.img,
-      // this.person.name,
-      // this.person.tel,
-      // this.person.email,
-      // this.person.password,
-      // this.person.age,
-      // this.person.sex,
-      // this.person.lifestyle,
-      // this.person.educational,
-      // this.person.faculty,
-      // this.person.year,
-      // this.person.facebook,
-      // this.person.instagram,
-      // this.person.other
-    // );
-  }
+    this.usersService.addUser(
+      this.person.email,
+      this.person.password,
+      this.person.name,
+      this.person.tel,
+      this.person.age,
+      this.person.sex,
+      this.person.lifestyle,
+      this.person.educational,
+      this.person.faculty,
+      this.person.year,
+      this.person.facebook,
+      this.person.instagram,
+      this.person.other,
+      this.person.img,
+      );
+    }
 
   logData(){
       console.log(this.person);

@@ -15,7 +15,7 @@ import firebase from 'firebase/app';
 
 import '@firebase/auth';
 
-import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { UsersService } from '../api/users.service';
 import { Subscription } from 'rxjs';
@@ -38,6 +38,27 @@ export class LoginPage implements OnInit {
   userId: string;
   userEmail: string;
 
+  login: FormGroup = new FormGroup({
+    email: new FormControl(''),
+    password: new FormControl(''),
+  });
+  hide = true;
+  get emailInput() {
+    return this.login.get('email');
+  }
+  get passwordInput() {
+    return this.login.get('password');
+  }
+
+  // private authSub: Subscription;
+  isLoading = false;
+  private authStatusSub: Subscription;
+  status;
+  loginData = {
+    email: '',
+    password: ''
+  }
+
   constructor(    private router: Router,
                   private ngZone: NgZone,
                   public loadingController: LoadingController,
@@ -46,37 +67,63 @@ export class LoginPage implements OnInit {
                   private authService: AuthService,
                   private http: HttpClient
                   ){     }
-  ngOnInit(){}
+  ngOnInit(): void {
+    this.userService.autoAuthUser();
+    this.status = this.userService.getAuthStatusListener();
+    console.log(this.status);
+    if (this.status === true) {
+      this.router.navigate(['/home']);
+    }
 
-  async loginUser(credentials: UserCredential): Promise<void> {
-    try {
-      const userCredential: firebase.auth.UserCredential = await this.authService.login(
-        credentials.email,
-        credentials.password
-        );
-      this.authService.userId = userCredential.user.uid;
-      this.http.get<{messaeg: string, email: string, status: any}>(this.url + '/' + credentials.email).subscribe((res)=>{
+    this.authStatusSub = this.userService
+      .getAuthStatusListener()
+      .subscribe((authStatus) => {
+        this.isLoading = false;
+        console.log('Authentication type : ', typeof authStatus);
+      });
+    }
+    logIn() {
+      this.userService.login(
+        this.login.value.email,
+        this.login.value.password
+      );
+      console.log(this.login);
+      
+            this.http.get<{messaeg: string, email: string, status: any}>(this.url + '/' + this.login.value.email).subscribe((res)=>{
         localStorage.setItem('data_user', res.email);
         // console.log(res);
         localStorage.setItem('id_user', res['_id']);
         // this.getUser();
       })
-      await this.loginForm.hideLoading();
-      // this.userService.getuserDetail();
       this.router.navigateByUrl('home');
-
-    } catch (error) {
-      await this.loginForm.hideLoading();
-      this.loginForm.handleError(error);
     }
-  }
-  // getUser(){
-  //   this.userId = localStorage.getItem('id_user');
-  //   this.userEmail = localStorage.getItem('data_user');
-  //   console.log(localStorage.getItem('id_user'));
-  //   this.http.get('http://localhost:3000/user/getuserDetail/'+this.userEmail
-  //   )
+
+  // async loginUser(credentials: UserCredential): Promise<void> {
+  //   try {
+  //     const userCredential: firebase.auth.UserCredential = await this.authService.login(
+  //       credentials.email,
+  //       credentials.password
+  //       );
+  //     this.authService.userId = userCredential.user.uid;
+  //     this.http.get<{messaeg: string, email: string, status: any}>(this.url + '/' + credentials.email).subscribe((res)=>{
+  //       localStorage.setItem('data_user', res.email);
+  //       // console.log(res);
+  //       localStorage.setItem('id_user', res['_id']);
+  //       // this.getUser();
+  //     })
+  //     await this.loginForm.hideLoading();
+  //     // this.userService.getuserDetail();
+  //     this.router.navigateByUrl('home');
+
+  //   } catch (error) {
+  //     await this.loginForm.hideLoading();
+  //     this.loginForm.handleError(error);
+  //   }
   // }
+  ngOnDestroy() {
+    this.authStatusSub.unsubscribe();
+  }
+
 
 
 }

@@ -52,15 +52,33 @@
 </ion-header>
 
 <ion-content color="dark">
-    <ion-card>
-        <app-auth-form #loginForm (formSubmitted)="loginUser($event)" [actionButtonText]="'Login'"></app-auth-form>
-
-
-        <ion-button expand="block" fill="clear" routerLink="/signup">
-            <!-- routerLink="/signup" -->
-            Create a new account
+    <form [formGroup]="login">
+        <ion-item>
+            <ion-label>
+                email
+            </ion-label>
+            <ion-input formControlName="email" name="email" [ngModel]="loginData.email" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label>
+                password
+            </ion-label>
+            <ion-input formControlName="password" name="password" [ngModel]="loginData.password" type="password"></ion-input>
+        </ion-item>
+        <ion-button (click)="logIn()">
+            Login
         </ion-button>
-    </ion-card>
+
+
+    </form>
+    <!-- <ion-card> -->
+    <!-- <app-auth-form #loginForm (formSubmitted)="loginUser($event)" [actionButtonText]="'Login'"></app-auth-form> -->
+
+
+    <!-- <ion-button expand="block" fill="clear" routerLink="/signup">
+            Create a new account
+        </ion-button> -->
+    <!-- </ion-card> -->
 
     <!-- <ion-button expand="block" fill="clear" routerLink="/reset-password"> -->
     <!-- I forgot my password :( -->
