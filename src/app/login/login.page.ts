@@ -30,17 +30,19 @@ import { constants } from 'buffer';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit {
-  @ViewChild(AuthFormComponent) loginForm: AuthFormComponent;
+  // @ViewChild(AuthFormComponent) loginForm: AuthFormComponent;
   url = 'http://localhost:3000/user/getuserDetail';
   submitError: string;
   signInForm: FormGroup;
   authRedirectResult: Subscription;
   userId: string;
   userEmail: string;
+  email: '';
+  password: '';
 
   login: FormGroup = new FormGroup({
-    email: new FormControl(''),
-    password: new FormControl(''),
+    email: new FormControl('', [Validators.email, Validators.required]),
+    password: new FormControl('', [Validators.required, Validators.min(6)]),
   });
   hide = true;
   get emailInput() {
@@ -50,14 +52,13 @@ export class LoginPage implements OnInit {
     return this.login.get('password');
   }
 
-  // private authSub: Subscription;
   isLoading = false;
   private authStatusSub: Subscription;
   status;
-  loginData = {
+  public loginData = {
     email: '',
     password: ''
-  }
+  };
 
   constructor(    private router: Router,
                   private ngZone: NgZone,
@@ -68,6 +69,7 @@ export class LoginPage implements OnInit {
                   private http: HttpClient
                   ){     }
   ngOnInit(): void {
+    // window.location.reload();
     this.userService.autoAuthUser();
     this.status = this.userService.getAuthStatusListener();
     console.log(this.status);
@@ -84,18 +86,16 @@ export class LoginPage implements OnInit {
     }
     logIn() {
       this.userService.login(
-        this.login.value.email,
-        this.login.value.password
+        this.loginData.email,
+        this.loginData.password
       );
-      console.log(this.login);
+      console.log(this.loginData.email ,this.loginData.password);
       
-            this.http.get<{messaeg: string, email: string, status: any}>(this.url + '/' + this.login.value.email).subscribe((res)=>{
+        this.http.get<{messaeg: string, email: string, status: any}>(this.url + '/' + this.loginData.email).subscribe((res)=>{
         localStorage.setItem('data_user', res.email);
-        // console.log(res);
         localStorage.setItem('id_user', res['_id']);
-        // this.getUser();
       })
-      this.router.navigateByUrl('home');
+      // this.router.navigateByUrl('home');
     }
 
   // async loginUser(credentials: UserCredential): Promise<void> {

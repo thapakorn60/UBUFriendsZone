@@ -1,5 +1,7 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { UsersService } from '../api/users.service';
+
 // import { ImagePickerOptions } from '@ionic-native/image-picker';
 
 
@@ -28,8 +30,11 @@ export class RegisterPage implements OnInit {
     other: '',
     img: ''
   };
-  constructor(private usersService: UsersService) { }
+  constructor(public usersService: UsersService,
+              public router: Router) { }
   ngOnInit() {
+
+    
   }
   register() {
     this.usersService.addUser(
@@ -48,10 +53,11 @@ export class RegisterPage implements OnInit {
       this.person.other,
       this.person.img,
       );
+      console.log(this.person);
+      this.router.navigateByUrl('login');
     }
 
   logData(){
-      console.log(this.person);
     }
 }
 

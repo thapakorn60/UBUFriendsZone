@@ -1,12 +1,23 @@
+import { LoginPage } from './login/login.page';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
+import { RegisterPage } from './register/register.page';
 
 const routes: Routes = [
-  {
+    {
     path: '',
+    component: LoginPage,
+  },
+  // {
+  //   path: 'register',
+  //   component: RegisterPage,
+  // },
+  {
+    path: 'home',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',

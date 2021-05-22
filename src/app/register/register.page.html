@@ -1,12 +1,18 @@
 <ion-header>
     <ion-toolbar>
-        <ion-title color="light">ลงทะเบียน</ion-title>
+        <ion-row>
+        <ion-button fill="clear" color="warning" href="login">
+            <ion-icon color="warning"  name="arrow-back"></ion-icon>
+
+        </ion-button>
+        <ion-title color="light">ลงทะเบียนนาจา</ion-title>
+        </ion-row>
     </ion-toolbar>
 </ion-header>
 
 <ion-content color="dark">
     <ion-card>
-        <form (ngSubmit)="register()">
+        <form >
             <ion-grid>
 
                 <ion-input type="file" class="inputfile inputfile-4" accept="image/*" class="upload"></ion-input>
@@ -143,7 +149,7 @@
                 </ion-row>
 
 
-                <ion-button fill="solid" expand="block" color="dark" type="submit" (click)="logData()">Signup</ion-button>
+                <ion-button fill="solid" expand="block" color="dark" type="submit" (click)="register()">Signup</ion-button>
 
 
             </ion-grid>

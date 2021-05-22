@@ -276,17 +276,17 @@ export class HomePage implements OnInit {
     this.timeScate = 0;
     this.timeEcate = 24;
 
-    this.userService.getUser().subscribe(user => {
-      this.userId = user['_id'];
-      console.log(this.userId);
-    });
+    // this.userService.getUser().subscribe(user => {
+    //   this.userId = user['_id'];
+    //   console.log(this.userId);
+    // });
     // console.log(this.userId);
 
-    this.profileService.getUserProfile().then(profile$ => {
-      profile$.subscribe(userProfile => {
-        this.userProfile = userProfile;
-      });
-    });
+    // this.profileService.getUserProfile().then(profile$ => {
+    //   profile$.subscribe(userProfile => {
+    //     this.userProfile = userProfile;
+    //   });
+    // });
     this.notiService.getNotification().subscribe(data => {
       // this.total = data.response.length;
       this.total = data.response.filter(res => res.read == false &&( res.ownerId == this.iduser || res.joinerId == this.iduser));
@@ -428,9 +428,9 @@ export class HomePage implements OnInit {
     await this.authService.logout();
     this.userService.logout();
     localStorage.removeItem('data_user')
-    this.router.navigateByUrl('login');
-    window.location.reload();
-    this.router.navigate(['/login']);
+    // this.router.navigateByUrl('login');
+    // window.location.reload();
+    // this.router.navigate(['/login']);
   }
 
   // -----------------------------test function--------------------------------------------

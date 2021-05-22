@@ -52,25 +52,27 @@
 </ion-header>
 
 <ion-content color="dark">
-    <form [formGroup]="login">
+    <!-- <form [formGroup]="login"> -->
         <ion-item>
             <ion-label>
                 email
             </ion-label>
-            <ion-input formControlName="email" name="email" [ngModel]="loginData.email" type="email"></ion-input>
+            <ion-input  [(ngModel)]="loginData.email" ></ion-input>
         </ion-item>
         <ion-item>
             <ion-label>
                 password
             </ion-label>
-            <ion-input formControlName="password" name="password" [ngModel]="loginData.password" type="password"></ion-input>
+            <ion-input [(ngModel)]="loginData.password" type="password"></ion-input>
         </ion-item>
         <ion-button (click)="logIn()">
             Login
         </ion-button>
 
-
-    </form>
+    <!-- </form> -->
+    <ion-button href="register">
+        Register
+    </ion-button>
     <!-- <ion-card> -->
     <!-- <app-auth-form #loginForm (formSubmitted)="loginUser($event)" [actionButtonText]="'Login'"></app-auth-form> -->
 
