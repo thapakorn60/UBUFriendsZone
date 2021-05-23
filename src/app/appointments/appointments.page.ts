@@ -4,6 +4,9 @@ import { AlertController } from '@ionic/angular';
 import { JoinsService } from '../api/joins.service';
 import { NotificationsService } from '../api/notifications.service';
 import { PostsService } from '../api/posts.service';
+import { CommentsPage } from '../comments/comments.page';
+import { ModalController } from '@ionic/angular';
+
 
 
 
@@ -20,8 +23,11 @@ export class AppointmentsPage implements OnInit{
   allPost: any;
   myPost: any;
   dataJoin: any;
+  joinThisPost: { response: any; };
+  joinChecked: any;
 
   constructor(public alertController: AlertController,
+              public modalCtrl: ModalController,
               private joinService: JoinsService,
               private postService: PostsService,
               public notification: NotificationsService) {}
@@ -116,6 +122,78 @@ export class AppointmentsPage implements OnInit{
 moveToPrev(slides){
   // console.log(slides);
   slides.slidePrev();
+}
+
+async gotoComment(name: string, id: string , uid: string) {
+  // console.log(id);
+  const modal = await this.modalCtrl.create({
+    component: CommentsPage,
+    cssClass: 'my-custom-class',
+    componentProps: {
+      eventname: name,
+      postId: id,
+      userid: uid
+    }
+  });
+  return await modal.present();
+}
+async deletePost(id: string) {
+  const alert = await this.alertController.create({
+    header: 'Delete',
+    message: 'คุณต้องการที่จะลบโพส',
+    buttons: [
+      {
+        text: 'ยกเลิก',
+        cssClass: 'secondary',
+        handler: (blah) => {
+          console.log('Cancel');
+        }
+      },
+      {
+        text: 'ตกลง',
+        handler: () => {
+          console.log(id);
+          this.joinService.getJoinn(id).subscribe(data => {
+            this.joinThisPost = data;
+            // console.log(this.joinThisPost);
+            // tslint:disable-next-line:forin
+            for (const join in this.joinThisPost) {
+              this.joinChecked = this.joinThisPost[join];
+
+              const postId = this.joinChecked.postId;
+              // console.log('postId naja ', postId);
+              const postName = this.joinChecked.postName;
+              const ownerName = this.joinChecked.ownerName;
+              const ownerId = this.joinChecked.ownerId;
+              const joinerName = this.joinChecked.joinerName;
+              const joinerId = this.joinChecked.joinerId;
+              const status = this.joinChecked.status;
+              const datetime = this.joinChecked.datetime;
+              const starttime = this.joinChecked.starttime;
+              const endtime = this.joinChecked.endtime;
+              const place = this.joinChecked.place;
+              const type = this.joinChecked.type;
+              const press = 'delete';
+              const inject = false;
+              const description = 'ยกเลิกกิจกรรม';
+              const read = false;
+              // console.log(this.joinChecked.joinerName);
+              // tslint:disable-next-line:max-line-length
+              this.notification.addNotification(postId, postName, ownerName, ownerId, joinerName, joinerId, status, datetime, starttime, endtime, place, type, press, inject, description, read);
+
+            }
+            this.postService.deletePost(id);
+            this.joinService.deleteJoinPost(id);
+            // this.joinService.deleteJoinPost(id);
+            // this.notiService.addNotification
+
+          });
+
+        }
+      }
+    ]
+  });
+  await alert.present();
 }
 
 }

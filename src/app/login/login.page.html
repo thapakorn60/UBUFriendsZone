@@ -45,34 +45,47 @@
     <ion-button size="large " expand="block " color="warning " href="register ">Register</ion-button>
 
 </ion-content> -->
-<ion-header>
+<!-- <ion-header>
     <ion-toolbar color="dark">
         <ion-title color="warning">Login</ion-title>
     </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content color="dark">
     <!-- <form [formGroup]="login"> -->
-        <ion-item>
-            <ion-label>
-                email
-            </ion-label>
-            <ion-input  [(ngModel)]="loginData.email" ></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label>
-                password
-            </ion-label>
-            <ion-input [(ngModel)]="loginData.password" type="password"></ion-input>
-        </ion-item>
-        <ion-button (click)="logIn()">
-            Login
-        </ion-button>
+    <ion-card>
+        <!-- <ion-title>Login
+        </ion-title> -->
+        <ion-col>
+            <ion-item>
+                <ion-label>
+                    email
+                </ion-label>
+                <ion-input [(ngModel)]="loginData.email"></ion-input>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+            <ion-item>
+                <ion-label>
+                    password
+                </ion-label>
+                <ion-input [(ngModel)]="loginData.password" type="password"></ion-input>
+            </ion-item>
+        </ion-col>
+        <ion-col>
+
+            <ion-button expand="block" (click)="logIn()">
+                Login
+            </ion-button>
+            <!-- <ion-label class="align-text-center">or</ion-label> -->
+            <ion-button expand="block" href="register">
+                Register
+            </ion-button>
+
+        </ion-col>
+    </ion-card>
 
     <!-- </form> -->
-    <ion-button href="register">
-        Register
-    </ion-button>
     <!-- <ion-card> -->
     <!-- <app-auth-form #loginForm (formSubmitted)="loginUser($event)" [actionButtonText]="'Login'"></app-auth-form> -->
 

@@ -67,12 +67,12 @@ export class HomePage implements OnInit {
   dataPost: Object;
   type = [
     { value: 'all', display: 'ทั้งหมด' },
-    { value: 'food', display: 'อาหาร' },
-    { value: 'sports', display: 'กีฬา' },
-    { value: 'media', display: 'บันเทิง' },
-    { value: 'edu', display: 'การศึกษา' },
-    { value: 'valun', display: 'กิจกรรม' },
-    { value: 'other', display: 'อื่นๆ' },
+    { value: 'อาหาร', display: 'อาหาร' },
+    { value: 'กีฬา', display: 'กีฬา' },
+    { value: 'บันเทิง', display: 'บันเทิง' },
+    { value: 'การศึกษา', display: 'การศึกษา' },
+    { value: 'กิจกรรม', display: 'กิจกรรม' },
+    { value: 'อื่นๆ', display: 'อื่นๆ' },
   ]
   numberTime = [
     { value: 0, display: '00.00 น.' },
@@ -135,6 +135,7 @@ export class HomePage implements OnInit {
   itemIntro = [];
   myStyle: any[];
   countJoin: any;
+  dateNow = Date.now();
 
   constructor(public alertController: AlertController,
     private postsService: PostsService,
@@ -158,7 +159,7 @@ export class HomePage implements OnInit {
     this.http.get<{ messaeg: string, email: string, status: any }>(this.url + '/' + this.email_login).subscribe((res) => {
       this.data_user_login = res
 
-    })
+    });
   }
 
   doRefresh(event) {
@@ -266,9 +267,7 @@ export class HomePage implements OnInit {
 
   // --------------------------------------------------------------------------------------------------------
   ngOnInit() {
-    this.authStatusSub = this.userService
-    .getAuthStatusListener()
-    .subscribe((authStatus) => {
+    this.authStatusSub = this.userService.getAuthStatusListener().subscribe((authStatus) => {
       this.isLoading = false;
     });
     this.typecate = 'all';
@@ -294,7 +293,7 @@ export class HomePage implements OnInit {
       console.log('noti : ', this.notilength);
 
     });
-
+    this.userId = localStorage.getItem('id_user');
     this.iduser = localStorage.getItem('id_user');
     this.userService.getidUser(this.iduser).subscribe(result => {
       this.detail = result;
@@ -307,7 +306,13 @@ export class HomePage implements OnInit {
       this.postService.getallPost().subscribe(result => {
         this.allPost = result.response;
         this.modeEvent = 'normal'
-        const postId = this.allPost['_id'];
+
+          
+
+        
+        // if(this.style == ''){
+        //   this.postData = this.allPost
+        // }
         this.style.forEach(element => {
           console.log(element);
           this.postData = this.allPost.filter(post =>
@@ -317,6 +322,8 @@ export class HomePage implements OnInit {
             this.item.push(iData);
           });
               console.log('cate : ', this.postData);
+              // console.log(postId);
+              
         });
         
         this.unique = Array.from(new Set(this.item.map(a => a._id))).map(id => {
@@ -337,7 +344,9 @@ export class HomePage implements OnInit {
           // console.log('count ', this.countJoin.length);
         });
         
+
       });
+      this.getCountJoin(postId);
      
         //Called once, before the instance is destroyed.
         //Add 'implements OnDestroy' to the class.
@@ -428,8 +437,9 @@ export class HomePage implements OnInit {
     await this.authService.logout();
     this.userService.logout();
     localStorage.removeItem('data_user')
+    localStorage.removeItem('id_user')
     // this.router.navigateByUrl('login');
-    // window.location.reload();
+    window.location.reload();
     // this.router.navigate(['/login']);
   }
 
@@ -683,6 +693,13 @@ export class HomePage implements OnInit {
     // window.location.reload();
     // this.changeRef.detectChanges();
 
+  }
+
+  async getCountJoin(postId: string){
+    this.joinService.getJoinn(postId).subscribe(res => {
+            this.joinData = res.response;
+            console.log(this.joinData);
+          });
   }
 
 

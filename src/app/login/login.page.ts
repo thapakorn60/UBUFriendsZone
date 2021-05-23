@@ -89,7 +89,7 @@ export class LoginPage implements OnInit {
         this.loginData.email,
         this.loginData.password
       );
-      console.log(this.loginData.email ,this.loginData.password);
+      // console.log(this.loginData.email ,this.loginData.password);
       
         this.http.get<{messaeg: string, email: string, status: any}>(this.url + '/' + this.loginData.email).subscribe((res)=>{
         localStorage.setItem('data_user', res.email);

@@ -133,7 +133,7 @@ export class UsersService {
       other,
       img
     };
-    console.log(this.logData);
+    // console.log(this.logData);
     this.http.post('http://localhost:3000/user/adduser', this.logData).subscribe((res) => {
       console.log(res);
     });

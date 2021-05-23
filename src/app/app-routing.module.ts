@@ -3,11 +3,12 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
 import { RegisterPage } from './register/register.page';
+import { FirstPage } from './pages/first/first.page';
 
 const routes: Routes = [
     {
     path: '',
-    component: LoginPage,
+    component: FirstPage,
   },
   // {
   //   path: 'register',
@@ -111,6 +112,11 @@ const routes: Routes = [
     path: 'myrequest',
     loadChildren: () => import('./myrequest/myrequest.module').then( m => m.MyrequestPageModule)
   },
+  {
+    path: 'first',
+    loadChildren: () => import('./pages/first/first.module').then( m => m.FirstPageModule)
+  },
+
 ];
 
 @NgModule({

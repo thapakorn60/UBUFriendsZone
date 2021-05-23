@@ -104,11 +104,11 @@ export class PostPage implements OnInit {
   // });
 
   ngOnInit() {
-    this.profileService.getUserProfile().then(profile$ => {
-      profile$.subscribe(userProfile => {
-        this.userProfile = userProfile;
-      });
-    });
+    // this.profileService.getUserProfile().then(profile$ => {
+    //   profile$.subscribe(userProfile => {
+    //     this.userProfile = userProfile;
+    //   });
+    // });
     this.route.paramMap.subscribe((paramMap) => {
       console.log(paramMap.has('id'));
       if (paramMap.has('id')) {

@@ -34,7 +34,6 @@ export class RegisterPage implements OnInit {
               public router: Router) { }
   ngOnInit() {
 
-    
   }
   register() {
     this.usersService.addUser(
@@ -53,8 +52,8 @@ export class RegisterPage implements OnInit {
       this.person.other,
       this.person.img,
       );
-      console.log(this.person);
-      this.router.navigateByUrl('login');
+    // console.log(this.person);
+    this.router.navigateByUrl('login');
     }
 
   logData(){
