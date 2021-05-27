@@ -23,11 +23,10 @@
             <ion-icon name="time"></ion-icon>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <ion-label>
-                <p>{{hi.postName}}</p>
+                <p>{{hi.postName}} ({{hi.type}})</p>
+                <p>{{hi.place}} วันที่ {{hi.datetime|date:"dd/MM/yyyy"}}</p>
                 <p>by {{hi.ownerName}}</p>
-                <p>place {{hi.place}}</p>
                 <!-- <p>{{dateNow | date: "dd/MM/yyyy" }}</p> -->
-                <p>{{hi.datetime|date:"dd/MM/yyyy HH:mm"}}</p>
             </ion-label>
             <!-- <div>
                 <ion-avatar slot="start">

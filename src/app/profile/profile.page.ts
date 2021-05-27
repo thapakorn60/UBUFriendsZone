@@ -73,11 +73,11 @@ export class ProfilePage implements OnInit {
     // this.user = this.usersService.getUser().subscribe(data => {
     //   console.log(data);
     // });
-    this.profileService.getUserProfile().then(profile$ => {
-      profile$.subscribe(userProfile => {
-        this.userProfile = userProfile;
-      });
-    });
+    // this.profileService.getUserProfile().then(profile$ => {
+    //   profile$.subscribe(userProfile => {
+    //     this.userProfile = userProfile;
+    //   });
+    // });
   }
   // ngOnDestroy() {
     // this.user.unsubscribe();

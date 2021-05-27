@@ -100,6 +100,45 @@ export class UsersService {
     console.log(localStorage.getItem('id_user'));
     return this.http.get('http://localhost:3000/user/getuserDetail/' + this.userEmail);
   }
+  editUser(
+    id: string,
+    email: string,
+    name: string,
+    tel: string,
+    age: string,
+    sex: string,
+    lifestyle: {},
+    educational: string,
+    faculty: string,
+    year: string,
+    facebook: string,
+    instagram: string,
+    other: string,
+    img: string,
+  ){
+    const userData = {
+      email,
+      name,
+      tel,
+      age,
+      sex,
+      lifestyle,
+      educational,
+      faculty,
+      year,
+      facebook,
+      instagram,
+      other,
+      img,
+    };
+    console.log('Formdata :', userData);
+    return this.http.put('http://localhost:3000/user/edituser/' + id, userData).subscribe(response => {
+      console.log(response);
+      this.router.navigate(['/home']);
+    }, (error) => {
+      console.log(error);
+    });
+  }
   addUser(
     email: string,
     password: string,
@@ -133,7 +172,7 @@ export class UsersService {
       other,
       img
     };
-    console.log(this.logData);
+    // console.log(this.logData);
     this.http.post('http://localhost:3000/user/adduser', this.logData).subscribe((res) => {
       console.log(res);
     });

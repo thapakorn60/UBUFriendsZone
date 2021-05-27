@@ -14,7 +14,7 @@
             <ion-col></ion-col>
             <ion-col></ion-col>
             <ion-col>
-                <ion-button color="warning">
+                <ion-button color="warning" [routerLink]="['/edituser', myId]">
                     <ion-icon size="large" name="pencil"></ion-icon>
                 </ion-button>
             </ion-col>
@@ -35,9 +35,6 @@
 
         </ion-thumbnail>
     </ion-item>
-    <ion-button fill="outline" color="warning">
-        <ion-icon size="large" name="pencil">c password</ion-icon>
-    </ion-button>
 
     <ion-list>
         <ion-item>

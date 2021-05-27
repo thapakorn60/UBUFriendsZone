@@ -33,7 +33,8 @@ export class PostsService {
     endtime: string,
     place: string,
     location: string,
-    amount: number
+    amount: number,
+    remain: number
   ){
     const postData = {
       name,
@@ -46,7 +47,8 @@ export class PostsService {
       endtime,
       place,
       location,
-      amount
+      amount,
+      remain
     };
     console.log('Formdata :', postData);
     return this.http.put('http://localhost:3000/post/editpost/' + id, postData).subscribe(response => {
@@ -79,6 +81,7 @@ export class PostsService {
     place: string,
     location: string,
     amount: number,
+    remain: number
     // reqtojoin: []
   ) {
     this.logData = {
@@ -93,6 +96,7 @@ export class PostsService {
       place,
       location,
       amount,
+      remain
       // reqtojoin
     };
     console.log(this.logData);

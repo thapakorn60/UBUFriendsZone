@@ -20,15 +20,20 @@
                         <ion-icon size="large" name="person-circle"></ion-icon>
                     </ion-avatar>
                     <ion-label>
-                        <ion-input type="text" [(ngModel)]="Post.name" name="name" value="{{data_user_login.name}}"></ion-input>
+                        <ion-input type="text" [(ngModel)]="Post.name" name="name" value="{{userName}}"></ion-input>
                     </ion-label>
                     <!-- <ion-input type="date" [(ngModel)]="Post.datePost" name="datePost" value="{{today | date: 'HH:mm dd/MM/yyyy'}}"></ion-input> -->
                     <!-- <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="Post.datePost"></ion-datetime> -->
                 </ion-item>
 
+                <ion-label>
+                    <p>เครื่องหมาย * บังคับกรอก</p>
+                </ion-label>
+
+
                 <ion-item>
-                    <ion-label position="floating">ชื่ออีเว้นท์</ion-label>
-                    <ion-input [(ngModel)]="Post.eventname" name="eventname"></ion-input>
+                    <ion-label position="floating">ชื่ออีเว้นท์ *</ion-label>
+                    <ion-input [(ngModel)]="Post.eventname" name="eventname" required></ion-input>
 
 
                 </ion-item>
@@ -38,32 +43,32 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label>หมวดหมู่</ion-label>
-                    <ion-select placeholder="เลือก" multiple="true" [(ngModel)]="Post.type" name="type">
-                        <ion-select-option value="food">อาหาร</ion-select-option>
-                        <ion-select-option value="sports">กีฬา</ion-select-option>
-                        <ion-select-option value="media">บันเทิง</ion-select-option>
-                        <ion-select-option value="edu">การศึกษา</ion-select-option>
-                        <ion-select-option value="valun">กิจกรรม</ion-select-option>
-                        <ion-select-option value="other">อื่นๆ</ion-select-option>
+                    <ion-label>หมวดหมู่ *</ion-label>
+                    <ion-select placeholder="เลือก" multiple="true" [(ngModel)]="Post.type" name="type" required>
+                        <ion-select-option value="อาหาร">อาหาร</ion-select-option>
+                        <ion-select-option value="กีฬา">กีฬา</ion-select-option>
+                        <ion-select-option value="บันเทิง">บันเทิง</ion-select-option>
+                        <ion-select-option value="การศึกษา">การศึกษา</ion-select-option>
+                        <ion-select-option value="กิจกรรม">กิจกรรม</ion-select-option>
+                        <ion-select-option value="อื่นๆ">อื่นๆ</ion-select-option>
                     </ion-select>
                 </ion-item>
 
                 <ion-item>
-                    <ion-label>วันที่ </ion-label>
+                    <ion-label>วันที่ *</ion-label>
                     <!-- <ion-input type="date" [(ngModel)]="Post.datetime" name="datetime" value="{{today | date: 'HH:mm dd/MM/yyyy'}}"></ion-input> -->
 
-                    <ion-datetime [(ngModel)]="Post.datetime" name="datetime" displayFormat="DD/MM/YYYY" value="01 " min="2021" max="2025" placeholder="เลือกเวลา"></ion-datetime>
+                    <ion-datetime [(ngModel)]="Post.datetime" name="datetime" displayFormat="DD/MM/YYYY" value="01 " min="2021" max="2025" placeholder="เลือกเวลา" required></ion-datetime>
                 </ion-item>
                 <ion-item>
                     <ion-row>
                         <ion-item>
-                            <ion-label>เวลาเริ่ม</ion-label>
-                            <ion-datetime [(ngModel)]="Post.starttime" name="starttime" displayFormat="HH:mm" value="00 : 00" placeholder="เวลาเริ่ม"></ion-datetime>
+                            <ion-label>เวลาเริ่ม *</ion-label>
+                            <ion-datetime [(ngModel)]="Post.starttime" name="starttime" displayFormat="HH:mm" value="00 : 00" placeholder="เวลาเริ่ม" required></ion-datetime>
                         </ion-item>
                         <ion-item>
-                            <ion-label>เวลาสิ้นสุด</ion-label>
-                            <ion-datetime [(ngModel)]="Post.endtime" name="endtime" displayFormat="HH:mm" value="00 : 00" placeholder="เวลาสิ้นสุด"></ion-datetime>
+                            <ion-label>เวลาสิ้นสุด *</ion-label>
+                            <ion-datetime [(ngModel)]="Post.endtime" name="endtime" displayFormat="HH:mm" value="00 : 00" placeholder="เวลาสิ้นสุด" required></ion-datetime>
                         </ion-item>
                     </ion-row>
                 </ion-item>
@@ -86,7 +91,7 @@
                 </ion-item>
 
                 <ion-item>
-                    <ion-label position="fixed">จำนวนคน</ion-label>
+                    <ion-label position="fixed" required>จำนวนคน *</ion-label>
                     <ion-input type="number" [(ngModel)]="Post.amount" name="amount" placeholder="ใส่จำนวนคน"></ion-input>
                 </ion-item>
 
@@ -98,7 +103,7 @@
             POST
         </ion-button> -->
         <ion-button fill="solid" expand="block" color="warning" (click)="addpost()">
-            POST
+            สร้างอีเว้นท์
         </ion-button>
     </ion-card>
 </ion-content>

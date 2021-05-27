@@ -1,12 +1,24 @@
+import { LoginPage } from './login/login.page';
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from './services/auth.guard';
+import { RegisterPage } from './register/register.page';
+import { FirstPage } from './pages/first/first.page';
 
 const routes: Routes = [
-  {
+    {
     path: '',
+    component: FirstPage,
+  },
+  // {
+  //   path: 'register',
+  //   component: RegisterPage,
+  // },
+  {
+    path: 'home',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -35,6 +47,10 @@ const routes: Routes = [
   {
     path: 'editpost/:id',
     loadChildren: () => import('./post/post.module').then( m => m.PostPageModule)
+  },
+  {
+    path: 'edituser/:id',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
   {
     path: 'appointments',
@@ -100,6 +116,11 @@ const routes: Routes = [
     path: 'myrequest',
     loadChildren: () => import('./myrequest/myrequest.module').then( m => m.MyrequestPageModule)
   },
+  {
+    path: 'first',
+    loadChildren: () => import('./pages/first/first.module').then( m => m.FirstPageModule)
+  },
+
 ];
 
 @NgModule({

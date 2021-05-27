@@ -1,10 +1,6 @@
 const GoogleStrategy = require('passport-google-oauth20').Strategy
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-const mongoose = require('mongoose');
-const config = require('../config/database');
-
-// const User = require('../models/User')
+const mongoose = require('mongoose')
+    // const User = require('../models/User')
 const User = require('../models/users')
 const cors = require("cors");
 const express = require('express');
@@ -64,27 +60,4 @@ module.exports = function(passport) {
     passport.deserializeUser((id, done) => {
         User.findById(id, (err, user) => done(err, user))
     })
-}
-
-module.exports = passport => {
-
-    var opts = {};
-    opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken(); //Here you have to put the same name inside quotes '' like you put inside token but without space after name
-    opts.secretOrKey = config.secretOrKey;
-    passport.use(new JwtStrategy(opts, function(jwt_payload, done) {
-        console.log(jwt_payload);
-        Users.getUserById(
-            jwt_payload._doc._id,
-            function(err, user) {
-                if (err) {
-                    return done(err, false);
-                }
-
-                if (user) {
-                    return done(null, user);
-                } else {
-                    return done(null, false);
-                }
-            });
-    }));
 }

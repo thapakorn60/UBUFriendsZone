@@ -1,15 +1,30 @@
 <ion-header>
-    <ion-toolbar>
-        <ion-title color="light">ลงทะเบียน</ion-title>
+    <ion-toolbar *ngIf="mode == 'create'">
+        <ion-row>
+            <ion-button fill="clear" color="warning" href="login">
+                <ion-icon color="warning" name="arrow-back"></ion-icon>
+            </ion-button>
+            <ion-title color="light">ลงทะเบียนนาจา</ion-title>
+        </ion-row>
+    </ion-toolbar>
+    <ion-toolbar *ngIf="mode == 'edit'">
+        <ion-row>
+            <ion-button fill="clear" color="warning" href="home">
+                <ion-icon color="warning" name="arrow-back"></ion-icon>
+            </ion-button>
+            <ion-title color="light">แก้ไขโปรไฟล์</ion-title>
+        </ion-row>
     </ion-toolbar>
 </ion-header>
 
 <ion-content color="dark">
     <ion-card>
-        <form (ngSubmit)="register()">
+        <form>
             <ion-grid>
-
-                <ion-input type="file" class="inputfile inputfile-4" accept="image/*" class="upload"></ion-input>
+                <ion-avatar>
+                <img [src]="image">
+                </ion-avatar>
+                <ion-input (change)="onSelectFile($event)" [(ngModel)]="person.img" name="img" type="file" class="inputfile inputfile-4" accept="image/*" class="upload"></ion-input>
                 <label for="file">Choose a file</label>
                 <!-- <center>
                     <ion-icon name="person-circle-outline" size="large"></ion-icon>
@@ -39,14 +54,14 @@
                     </ion-item>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="mode == 'create'">
                     <ion-item>
                         <ion-label position="fixed">รหัสผ่าน</ion-label>
                         <ion-input type="password" [(ngModel)]="person.password" name="password"></ion-input>
                     </ion-item>
                 </ion-row>
 
-                <ion-row>
+                <ion-row *ngIf="mode == 'create'"> 
                     <ion-item>
                         <ion-label position="fixed">ยืนยันรหัสผ่าน</ion-label>
                         <ion-input type="password" name="cpassword"></ion-input>
@@ -58,7 +73,7 @@
                 <ion-row>
                     <ion-item>
                         <ion-label position="floating">อายุ</ion-label>
-                        <ion-input type="text" [(ngModel)]="person.age" name="age"></ion-input>
+                        <ion-input type="number" [(ngModel)]="person.age" name="age"></ion-input>
                     </ion-item>
                 </ion-row>
 
@@ -66,8 +81,8 @@
                 <ion-item>
                     <ion-label>เพศ</ion-label>
                     <ion-select placeholder="เลือกเพศ" [(ngModel)]="person.sex" name="sex">
-                        <ion-select-option value="m">ชาย</ion-select-option>
-                        <ion-select-option value="f">หญิง</ion-select-option>
+                        <ion-select-option value="ชาย">ชาย</ion-select-option>
+                        <ion-select-option value="หญิง">หญิง</ion-select-option>
                     </ion-select>
                 </ion-item>
 
@@ -76,32 +91,35 @@
                 <ion-item>
                     <ion-label>Lifestyle</ion-label>
                     <ion-select placeholder="เลือก" multiple="true" color="success" [(ngModel)]="person.lifestyle" name="lifestyle">
-                        <ion-select-option value="food">อาหาร</ion-select-option>
-                        <ion-select-option value="sport">กีฬา</ion-select-option>
-                        <ion-select-option value="media">บันเทิง</ion-select-option>
-                        <ion-select-option value="edu">การศึกษา</ion-select-option>
-                        <ion-select-option value="valun">กิจกรรม</ion-select-option>
+                        <ion-select-option value="อาหาร">อาหาร</ion-select-option>
+                        <ion-select-option value="กีฬา">กีฬา</ion-select-option>
+                        <ion-select-option value="บันเทิง">บันเทิง</ion-select-option>
+                        <ion-select-option value="การศึกษา">การศึกษา</ion-select-option>
+                        <ion-select-option value="กิจกรรม">กิจกรรม</ion-select-option>
+                        <ion-select-option value="อื่นๆ">อื่นๆ</ion-select-option>
                     </ion-select>
                 </ion-item>
 
                 <ion-item>
                     <ion-label>การศึกษา</ion-label>
                     <ion-select placeholder="เลือก" [(ngModel)]="person.educational" name="educational">
-                        <ion-select-option value="e">กำลังศึกษา</ion-select-option>
-                        <ion-select-option value="f">จบการศึกษา</ion-select-option>
+                        <ion-select-option value="ปริญญาตรี">ปริญญาตรี</ion-select-option>
+                        <ion-select-option value="ปริญญาโท">ปริญญาโท</ion-select-option>
+                        <ion-select-option value="ปริญญาเอก">ปริญญาเอก</ion-select-option>
+
                     </ion-select>
                 </ion-item>
 
                 <ion-item>
                     <ion-label>คณะ</ion-label>
                     <ion-select placeholder="เลือก" [(ngModel)]="person.faculty" name="faculty">
-                        <ion-select-option value="e">วิทยาศาสตร์</ion-select-option>
-                        <ion-select-option value="f">บริหาร</ion-select-option>
-                        <ion-select-option value="f">รัฐศาสตร์</ion-select-option>
-                        <ion-select-option value="f">นิติศาสตร์</ion-select-option>
-                        <ion-select-option value="f">เกษตรศาสตร์</ion-select-option>
-                        <ion-select-option value="f">วิศวกรรมศาสตร์</ion-select-option>
-                        <ion-select-option value="f">แพทยศาสตร์</ion-select-option>
+                        <ion-select-option value="วิทยาศาสตร์">วิทยาศาสตร์</ion-select-option>
+                        <ion-select-option value="บริหาร">บริหาร</ion-select-option>
+                        <ion-select-option value="รัฐศาสตร์">รัฐศาสตร์</ion-select-option>
+                        <ion-select-option value="นิติศาสตร์">นิติศาสตร์</ion-select-option>
+                        <ion-select-option value="เกษตรศาสตร์">เกษตรศาสตร์</ion-select-option>
+                        <ion-select-option value="วิศวกรรมศาสตร์">วิศวกรรมศาสตร์</ion-select-option>
+                        <ion-select-option value="แพทยศาสตร์">แพทยศาสตร์</ion-select-option>
                     </ion-select>
                 </ion-item>
 
@@ -143,7 +161,8 @@
                 </ion-row>
 
 
-                <ion-button fill="solid" expand="block" color="dark" type="submit" (click)="logData()">Signup</ion-button>
+                <ion-button *ngIf="mode == 'create'" fill="solid" expand="block" color="dark" type="submit" (click)="register()">Signup</ion-button>
+                <ion-button *ngIf="mode == 'edit'" fill="solid" expand="block" color="dark" type="submit" (click)="register()">แก้ไขเรียบร้อย</ion-button>
 
 
             </ion-grid>
