@@ -346,7 +346,7 @@ export class HomePage implements OnInit {
         
 
       });
-      this.getCountJoin(postId);
+      // this.getCountJoin(postId);
      
         //Called once, before the instance is destroyed.
         //Add 'implements OnDestroy' to the class.
@@ -389,7 +389,7 @@ export class HomePage implements OnInit {
           text: 'ตกลง',
           handler: () => {
             console.log(id);
-            this.joinService.getJoinn(id).subscribe(data => {
+            this.joinService.getJoinPostId(id).subscribe(data => {
               this.joinThisPost = data;
               // console.log(this.joinThisPost);
               for (let join in this.joinThisPost) {

@@ -49,7 +49,7 @@ export class JoinsService {
       console.log(res);
     });
   }
-  getJoinn(postId: string){
+  getJoinPostId(postId: string){
     return this.http.get<{ response: any }>('http://localhost:3000/join/getJoinn/' + postId);
   }
 

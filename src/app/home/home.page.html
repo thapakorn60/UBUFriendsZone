@@ -269,7 +269,8 @@
             </ion-card>
         </div>
         <div *ngFor="let listPost of unique">
-            <div *ngIf="(listPost.datetime | date:'dd/MM/yyyy') > (dateNow | date:'dd/MM/yyyy')">
+            <!-- <div *ngIf="(listPost.datetime | date:'dd/MM/yyyy') > (dateNow | date:'dd/MM/yyyy')"> -->
+            <div>
                 <ion-card>
                     <ion-header>
                         <ion-toolbar color="warning">
@@ -504,7 +505,8 @@
             </ion-card>
         </div>
         <div *ngFor="let listPost of unique">
-            <div *ngIf="(listPost.datetime | date:'dd/MM/yyyy') > (dateNow | date:'dd/MM/yyyy')">
+            <!-- <div *ngIf="(listPost.datetime | date:'dd/MM/yyyy') > (dateNow | date:'dd/MM/yyyy')"> -->
+            <div>
                 <ion-card>
                     <ion-header>
                         <ion-toolbar color="warning">

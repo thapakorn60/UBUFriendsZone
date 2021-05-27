@@ -45,6 +45,7 @@ export class EventdetailPage implements OnInit {
   countJoin: any;
   total: number;
   eventname: any;
+  userName: any;
 
   constructor(public modalCtrl: ModalController,
               public alertController: AlertController,
@@ -64,6 +65,7 @@ export class EventdetailPage implements OnInit {
     this.iduser = localStorage.getItem('id_user');
     this.userService.getidUser(this.iduser).subscribe(data => {
       this.userDetail = data;
+      this.userName = this.userDetail['name'];
       console.log(this.userDetail);
       
     })
@@ -92,8 +94,6 @@ export class EventdetailPage implements OnInit {
         console.log(this.countJoin);
         console.log(this.total);
         
-
-
         if (this.thisJoin.length > 0){
           this.join = true;
         }else if (this.thisJoin.length === 0) {
@@ -140,12 +140,11 @@ export class EventdetailPage implements OnInit {
             this.join = true;
             this.postService.getidPost(id).subscribe(data => {
               this.dataPost = data;
-
               const postId = this.dataPost._id;
               const postName = this.dataPost.eventname;
               const ownerId = this.dataPost.userid;
               const ownerName = this.dataPost.name;
-              const joinerName = this.data_user_login.name;
+              const joinerName = this.userName;
               this.joinerId = localStorage.getItem('id_user');
               this.status = false;
               const datetime = this.dataPost.datetime;

@@ -24,15 +24,13 @@ export class NotificationsPage implements OnInit {
 
   ngOnInit() {
     this.iduser = localStorage.getItem('id_user');
-    this.userService.getidUser(this.iduser).subscribe(result => {
-      this.detail = result;
-      // console.log(this.detail['lifestyle']);
-      // this.style = this.detail['lifestyle'];
-      // this.name = this.detail['name'];
-      // console.log('MyStyle: ', this.style);
-    });
+    // this.userService.getidUser(this.iduser).subscribe(result => {
+    //   this.detail = result;
+    // });
     this.notiService.getNotification().subscribe(data => {
       this.allNoti = data.response;
+      this.detail = this.allNoti.filter(res => res.joinerId === this.iduser || res.ownerId === this.iduser);
+
       console.log(this.allNoti);
     });
   }

@@ -4,6 +4,7 @@ import { JoinsService } from 'src/app/api/joins.service';
 import { CommentsService } from '../api/comments.service';
 import { UsersService } from '../api/users.service';
 import { HttpClient } from '@angular/common/http';
+import { ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -38,6 +39,8 @@ export class CommentsPage implements OnInit {
   thisJoin: any;
   joinerId: any;
   thisComment: any;
+  iduser: string;
+  dataUser: any;
 
   constructor(public modalCtrl: ModalController,
               public alertController: AlertController,
@@ -45,16 +48,19 @@ export class CommentsPage implements OnInit {
               private userService: UsersService,
               public commentService: CommentsService,
               private http: HttpClient,
+              public toastController: ToastController
               ) {}
 
   ngOnInit() {
     console.log('name : ', this.eventname);
     console.log('Postid : ', this.postId);
     console.log('userid : ', this.userid);
-    this.userService.getUser().subscribe(user => {
-      this.userId = user._id;
-      this.userName = user.name;
-      // console.log(this.userId);
+    this.userId = localStorage.getItem('id_user');
+    this.userService.getidUser(this.userId).subscribe(user => {
+      this.dataUser = user ;
+      // this.userId = this.dataUser._id;
+      this.userName = this.dataUser.name;
+      // console.log(this.dataUser);
       // console.log(this.userName);
     });
     this.commentService.getComment().subscribe(data => {
@@ -72,22 +78,26 @@ export class CommentsPage implements OnInit {
         this.ownerId = this.thisJoin.ownerId;
         this.joinerId = this.thisJoin.joinerId;
         this.status = this.thisJoin.status;
-        // console.log(this.thisJoin.postName);
-        // console.log('ownerId :', this.ownerId);
-        // console.log('joinerId :', this.joinerId);
-        // console.log('status :', this.status);
       }
 
     });
   }
 
-  addComment(){
+  async addComment(){
+    if (this.Comment.description === ''){
+      const toast = await this.toastController.create({
+        message: 'Not message.',
+        duration: 2000
+      });
+      toast.present();
+    } else{
     this.commentService.addComment(
       this.postId,
       this.userName,
       this.userId,
       this.Comment.description
     );
+    }
   }
 
   async deleteComment(id: string) {

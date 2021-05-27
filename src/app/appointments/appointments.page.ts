@@ -153,7 +153,7 @@ async deletePost(id: string) {
         text: 'ตกลง',
         handler: () => {
           console.log(id);
-          this.joinService.getJoinn(id).subscribe(data => {
+          this.joinService.getJoinPostId(id).subscribe(data => {
             this.joinThisPost = data;
             // console.log(this.joinThisPost);
             // tslint:disable-next-line:forin

@@ -94,7 +94,8 @@ export class LoginPage implements OnInit {
         this.http.get<{messaeg: string, email: string, status: any}>(this.url + '/' + this.loginData.email).subscribe((res)=>{
         localStorage.setItem('data_user', res.email);
         localStorage.setItem('id_user', res['_id']);
-      })
+      });
+      // window.location.reload();
       // this.router.navigateByUrl('home');
     }
 

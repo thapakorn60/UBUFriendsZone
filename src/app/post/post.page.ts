@@ -16,6 +16,7 @@ import { UserProfile } from 'src/app/models/user';
 import { HttpClient } from '@angular/common/http';
 import { UsersService } from '../api/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 // import { NavParams } from '@ionic/angular';
 // NavParams
 
@@ -44,7 +45,7 @@ export class PostPage implements OnInit {
     amount: 0,
     // reqtojoin:[]
   };
-
+  dateNow = Date.now();
 
 
 
@@ -57,6 +58,9 @@ export class PostPage implements OnInit {
   selectedcollegename: any;
   userid: any;
   postId: string;
+  iduser: any;
+  dataUser: Object;
+  userName: any;
 
 
   constructor(private geolocation: Geolocation,
@@ -65,7 +69,8 @@ export class PostPage implements OnInit {
     private http: HttpClient,
     private userServices: UsersService,
     private route: ActivatedRoute,
-    public router: Router
+    public router: Router,
+    public toastController: ToastController
   ) {
     this.email_login = localStorage.getItem('data_user');
 
@@ -109,6 +114,12 @@ export class PostPage implements OnInit {
     //     this.userProfile = userProfile;
     //   });
     // });
+    this.iduser = localStorage.getItem('id_user');
+    this.userServices.getidUser(this.iduser).subscribe(result => {
+      this.dataUser = result;
+      this.userName = this.dataUser['name'];
+      console.log(this.userName);
+    });
     this.route.paramMap.subscribe((paramMap) => {
       console.log(paramMap.has('id'));
       if (paramMap.has('id')) {
@@ -140,7 +151,7 @@ export class PostPage implements OnInit {
     // this.selectedcollegename = this.name;
   }
 
-  addpost() {
+async  addpost() {
     if (this.mode == 'edit') {
       this.postsService.editPost(
         this.postId,
@@ -157,11 +168,24 @@ export class PostPage implements OnInit {
         this.Post.amount
       );
     } else {
-      this.userServices.getUser().subscribe(result => {
+      if (this.Post.eventname == '' || this.Post.type == '' || this.Post.datetime == '' || this.Post.starttime == ''
+          || this.Post.endtime == '' || this.Post.amount == 0) {
+            const toast = await this.toastController.create({
+              message: 'กรอกข้อมูลไม่ครบ',
+              duration: 2000
+            });
+            toast.present();
+      // } else if (this.Post.datetime < this.dateNow) {
+      //   const toast = await this.toastController.create({
+      //     message: 'Not message.',
+      //     duration: 2000
+      //   });
+      //   toast.present();
+
+      }else{
         this.userid = localStorage.getItem('id_user');
-        console.log(this.userid);
         this.postsService.addPost(
-          this.data_user_login['name'],
+          this.userName,
           this.Post.eventname,
           this.userid,
           this.Post.description,
@@ -172,11 +196,11 @@ export class PostPage implements OnInit {
           this.Post.place,
           this.Post.location,
           this.Post.amount
-          // this.Post.reqtojoin
         );
       this.router.navigate(['/home']);
 
-      });
+      // });
+        }
     }
   }
 }
