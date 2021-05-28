@@ -2,15 +2,15 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/users')
 const User = require('../models/users');
-const extractFile = require('../middlewares/file');
+const checkAuth = require("../middleware/check-auth");
+const extractFile = require('../middleware/file');
 
 router.post('/authentication', userController.authentication);
-
 router.get('/getuser', userController.getuser);
-router.get('/getiduser/:id', userController.getiduser);
+router.get('/getidUser/:id', userController.getidUser);
 router.get('/getuserDetail/:email', userController.getuserDetail);
 router.post('/adduser',extractFile, userController.adduser);
-router.put('/edituser/:id', userController.edituser);
+router.put('/edituser/:id',extractFile, userController.edituser);
 router.delete('/deleteuser/:id', userController.deleteuser);
 // router.post('/login', userController.login);
 

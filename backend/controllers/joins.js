@@ -66,10 +66,11 @@ exports.deleteJoinPost = (req, res, next) => {
     })
 };
 
-exports.getJoinn = (req, res, next) => {
+exports.getJoinPostId = (req, res, next) => {
     postId = req.params.postId
     Joins.find({ 'postId': postId }).then((data) => {
-        res.json(data)
+        // res.json(data)
+        res.send(data)
     }).catch(err => {
         res.status(500).send(err)
     })

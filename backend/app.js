@@ -36,7 +36,7 @@ app.use((req, res, next) => {
 });
 // Passport config
 require('./config/passport')(passport)
-connectDB()
+    // connectDB()
     // const app = express()
 
 // Body parser
@@ -95,17 +95,17 @@ app.use(express.static(path.join(__dirname, 'public')))
 
 
 // connect db
-// mongoose.connect(
-//     config.database, {
-//         useNewUrlParser: true,
+mongoose.connect(
+    config.database, {
+        useNewUrlParser: true,
 
-//     }
-// ).then(() => {
-//     console.log("connected db");
-// });
-// mongoose.connection.on("error", (err) => {
-//     console.log("can't connnect db");
-// });
+    }
+).then(() => {
+    console.log("connected db");
+});
+mongoose.connection.on("error", (err) => {
+    console.log("can't connnect db");
+});
 
 
 // route
@@ -113,7 +113,8 @@ const routePost = require("./routes/posts");
 const routeUser = require("./routes/users");
 const routeJoin = require("./routes/joins");
 const routeComment = require("./routes/comments");
-const routeNotification = require("./routes/notifications")
+const routeNotification = require("./routes/notifications");
+const routeHistory = require("./routes/histories");
 
 
 app.get("/", (req, res, next) => {
@@ -126,6 +127,7 @@ app.use("/user", routeUser);
 app.use("/join", routeJoin);
 app.use("/comment", routeComment);
 app.use("/notification", routeNotification);
+app.use("/history", routeHistory);
 
 
 // app.listen(port, () => {

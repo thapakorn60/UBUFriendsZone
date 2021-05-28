@@ -1,22 +1,23 @@
-// module.exports = {
-//     database: 'mongodb://localhost/UBUfz'
-// }
-// GOOGLE_CLIENT_SECRET = YFoOSmm0kMQpLn-Rm2FFJ7WC
+module.exports = {
+        database: 'mongodb://localhost/UBUfz',
+        secretOrKey: 'ubufriendszone'
+    }
+    // GOOGLE_CLIENT_SECRET = YFoOSmm0kMQpLn-Rm2FFJ7WC
 const mongoose = require('mongoose')
 
-const connectDB = async() => {
-    try {
-        const conn = await mongoose.connect(process.env.MONGO_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-            useFindAndModify: false,
-        })
+// const connectDB = async() => {
+//     try {
+//         const conn = await mongoose.connect(process.env.MONGO_URI, {
+//             useNewUrlParser: true,
+//             useUnifiedTopology: true,
+//             useFindAndModify: false,
+//         })
 
-        console.log(`MongoDB Connected: ${conn.connection.host}`)
-    } catch (err) {
-        console.error(err)
-        process.exit(1)
-    }
-}
+//         console.log(`MongoDB Connected: ${conn.connection.host}`)
+//     } catch (err) {
+//         console.error(err)
+//         process.exit(1)
+//     }
+// }
 
-module.exports = connectDB
+// module.exports = connectDB

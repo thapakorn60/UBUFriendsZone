@@ -10,7 +10,8 @@ const Post = mongoose.Schema({
     endtime: String,
     place: String,
     location: [],
-    amount: String,
+    amount: Number,
+    remain: Number
     // reqtojoin: Array
 }, { timestamps: true });
 module.exports = mongoose.model('Posts', Post);

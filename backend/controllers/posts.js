@@ -41,6 +41,7 @@ exports.addpost = async(req, res, next) => {
         place: req.body.place,
         location: req.body.location,
         amount: req.body.amount,
+        remain: req.body.remain
         // reqtojoin: req.body.reqtojoin
     })
     console.log(post);
@@ -71,6 +72,7 @@ exports.editpost = (req, res, next) => {
         place: req.body.place,
         location: req.body.location,
         amount: req.body.amount,
+        remain: req.body.remain
         // reqtojoin: [{
         //     joinerId: req.body.joinerId,
         //     status: req.body.status
@@ -91,7 +93,7 @@ exports.editpost = (req, res, next) => {
         res.json(data)
         console.log(data)
     }).catch(err => {
-        // console.log(err)
+        console.log(err)
         // res.status(500).send(err)
     })
 
